@@ -13,3 +13,15 @@ export const getItemsData = async (params: any) => {
 
   return res;
 };
+
+export const sendToParty = async (data: any) => {
+  const res = await fetch(
+    "http://103.94.110.212:85/malad/api/master/party.php",
+    {
+      method: "POST",
+      body: JSON.stringify({ data: data }),
+    }
+  );
+  const s = await res.json();
+  console.log(s);
+};

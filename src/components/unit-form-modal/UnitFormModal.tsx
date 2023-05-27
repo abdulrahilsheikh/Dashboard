@@ -1,5 +1,6 @@
 import { MenuItem, Modal, TextField } from "@mui/material";
 import { useRef, useState } from "react";
+import { useForm, useFieldArray, Controller } from "react-hook-form";
 
 type Props = {
   open: boolean;
@@ -8,7 +9,7 @@ type Props = {
   values: { [key: string]: string };
   isNew: boolean;
   newItemData: { [key: string]: string };
-  hadleSubmit: (data: any) => void;
+  onSubmit: (data: any) => void;
 };
 export interface AddNewItemModalOptions {
   name: string;
@@ -28,10 +29,25 @@ const UnitFormModal = ({
   values,
   isNew,
   newItemData,
-  hadleSubmit,
+  onSubmit,
 }: Props) => {
+  const inital = isNew
+    ? { unitName: newItemData.unitName, shortName: "" }
+    : { unitName: values.unitName, shortName: values.shortName };
+  const { control, register, getValues, handleSubmit } = useForm({
+    defaultValues: { fields: [inital] },
+  });
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "fields",
+  });
   const ref = useRef<any>(null);
-  const [localList, setLocalList] = useState([list]);
+  const addToFields = () => {
+    append({ unitName: "", shortName: "" });
+  };
+  const removeFromList = (idx: number) => {
+    remove(idx);
+  };
   return (
     <Modal
       open={open}
@@ -43,7 +59,7 @@ const UnitFormModal = ({
     >
       <form
         ref={ref}
-        onSubmit={(e) => hadleSubmit(e)}
+        onSubmit={handleSubmit(onSubmit)}
         className="z-10 w-[80%] outline-none border-none rounded-lg text-black  bg-white h-min p-8"
       >
         <div className="flex justify-between mb-4">
@@ -56,43 +72,63 @@ const UnitFormModal = ({
           </button>
         </div>
         <div className="">
-          <div>
-            <div></div>
-          </div>
-          {localList.map((list) => (
-            <div className="grid grid-cols-[3rem_1fr_1fr] gap-4 justify-center content-center items-center">
-              <div>
-                <div className="bg-blue-200 h-6 w-6"></div>
+          <div className="mb-4 grid grid-cols-[3rem_1fr_1fr] gap-4 justify-center content-center items-center">
+            <div onClick={addToFields}>
+              <div className="transition-all bg-blue-200 flex items-center justify-center h-10 w-10 cursor-pointer rounded-full hover:bg-blue-500">
+                <i className="fa-solid fa-plus"></i>
               </div>
-              {list.map((item) =>
-                item.type == "text" ? (
-                  <TextField
-                    className={"cap"}
-                    name={item.name}
-                    defaultValue={
-                      isNew ? newItemData[item.name] : values[item.name]
-                    }
-                    label={item.placeholder}
-                    variant="outlined"
-                    sx={{ label: { textTransform: "capitalize" } }}
-                  />
-                ) : (
-                  <TextField
-                    select
-                    sx={{ label: { d: "capitalize", color: "black" } }}
-                    name={item.name}
-                    defaultValue={values[item.name]}
-                    label={item.placeholder}
-                    placeholder={item.placeholder}
-                  >
-                    {item!.options?.map((field) => (
-                      <MenuItem value={field.value}>{field.label}</MenuItem>
-                    ))}
-                  </TextField>
-                )
-              )}
             </div>
-          ))}
+            <div className="font-semibold text-lg">Unit Name</div>
+            <div className="font-semibold text-lg">Short Name</div>
+          </div>
+          <div className="flex flex-col gap-4">
+            {fields.map((item, index) => (
+              <div className="grid grid-cols-[3rem_1fr_1fr] gap-4 justify-center content-center items-center">
+                <div onClick={() => removeFromList(index)}>
+                  <div className="transition-all bg-red-200 flex items-center justify-center h-10 w-10 cursor-pointer rounded-full hover:bg-red-500">
+                    <i className="fa-solid fa-xmark"></i>
+                  </div>
+                </div>
+
+                {/* <TextField
+                  className={"cap"}
+                  {...register(`fields.${index}.unitName`)}
+                  label={list[0].placeholder}
+                  variant="outlined"
+                  sx={{ label: { textTransform: "capitalize" } }}
+                  value={getValues(`fields.${index}.unitName`)}
+                /> */}
+                <Controller
+                  control={control}
+                  name={`fields.${index}.unitName`}
+                  render={({ field }) => (
+                    <TextField
+                      className={"cap"}
+                      {...field}
+                      label={list[0].placeholder}
+                      variant="outlined"
+                      sx={{ label: { textTransform: "capitalize" } }}
+                      value={getValues(`fields.${index}.unitName`)}
+                    />
+                  )}
+                />
+                <Controller
+                  control={control}
+                  name={`fields.${index}.shortName`}
+                  render={({ field }) => (
+                    <TextField
+                      className={"cap"}
+                      {...field}
+                      label={list[1].placeholder}
+                      variant="outlined"
+                      sx={{ label: { textTransform: "capitalize" } }}
+                      value={getValues(`fields.${index}.shortName`)}
+                    />
+                  )}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </form>
     </Modal>

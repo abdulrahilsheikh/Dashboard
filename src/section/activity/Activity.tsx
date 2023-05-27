@@ -10,7 +10,7 @@ import { columns, formField } from "./table.const";
 
 const colNames: any = columns.map((item) => item.field);
 
-const Unit = () => {
+const Activity = () => {
   const [openAddNew, setOpenAddNew] = useState(false);
   const [rows, setRows] = useState([]);
   const [total, setTotal] = useState(0);
@@ -93,4 +93,4 @@ const Unit = () => {
   );
 };
 
-export default Unit;
+export default Activity;

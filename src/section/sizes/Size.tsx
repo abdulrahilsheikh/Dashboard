@@ -1,8 +1,8 @@
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import PartFormModal from "../../components/party-form-modal/PartFormModal";
 import { SearchBar } from "../../components/search-bar/SearchBar";
+import SizeFormModal from "../../components/size-form-modal/SizeFormModal";
 import UnitFormModal from "../../components/unit-form-modal/UnitFormModal";
 import { useDebounce } from "../../hooks/useDebounce";
 import { getItemsData } from "../../utils/httpRequests";
@@ -10,15 +10,14 @@ import { columns, formField } from "./table.const";
 
 const colNames: any = columns.map((item) => item.field);
 
-const Unit = () => {
+const Size = () => {
   const [openAddNew, setOpenAddNew] = useState(false);
   const [rows, setRows] = useState([]);
   const [total, setTotal] = useState(0);
   const [search, setSearch] = useState("");
   const [pageInfo, setPageInfo] = useState({ page: 0, pageSize: 25 });
-  const [editRowData, setEditRowData] = useState({});
+  const [editRowData, setEditRowData] = useState<any>({});
   const searchParm = useDebounce(search, 150);
-
   const getdataFromServer = async () => {
     const data = await getItemsData({
       page: +pageInfo.page,
@@ -27,11 +26,11 @@ const Unit = () => {
     });
     const items = data.data.map((item: any, idx: number) => {
       const temp: any = {};
-
       item.forEach((obj: any, idx: number) => {
         temp[colNames[idx]] = obj;
       });
       temp["id"] = idx;
+      temp["sizes"] = ["sm", "xl", "2xl", "3xl", "lg"];
       return temp;
     });
     setTotal(data.recordsTotal);
@@ -48,14 +47,14 @@ const Unit = () => {
   return (
     <div className="flex h-full">
       {openAddNew && (
-        <UnitFormModal
+        <SizeFormModal
           onSubmit={handleSubmit}
           open={openAddNew}
           onClose={() => setOpenAddNew(false)}
           list={formField}
           values={editRowData}
           isNew={!rows.length}
-          newItemData={{ unitName: search }}
+          newItemData={{ sizeName: search }}
         />
       )}
       {!!document.getElementById("dashboardOutletUtiltiyContainer") && (
@@ -93,4 +92,4 @@ const Unit = () => {
   );
 };
 
-export default Unit;
+export default Size;

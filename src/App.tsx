@@ -5,6 +5,7 @@ import MainOutlet from "./outlets/main-outlet/MainOutlet";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Items from "./section/items/Items";
 import Party from "./section/party/Party";
+import Size from "./section/sizes/Size";
 import Unit from "./section/unit/Unit";
 
 function App() {
@@ -57,7 +58,7 @@ function App() {
             },
             {
               path: "size",
-              element: <div>Size</div>,
+              element: <Size />,
             },
             {
               path: "unit",
