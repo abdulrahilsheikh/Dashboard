@@ -8,7 +8,7 @@ export const columns: GridColDef[] = [
   },
   {
     field: "shortName",
-    headerName: (<div className="font-bold">{"Short Person"}</div>) as any,
+    headerName: (<div className="font-bold">{"Short Name"}</div>) as any,
     width: 150,
   },
 ];
@@ -21,7 +21,7 @@ export const formField = [
   },
   {
     name: "shortName",
-    placeholder: "Short Person",
+    placeholder: "Short Name",
     type: "text",
   },
 ];

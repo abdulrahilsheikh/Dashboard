@@ -1,17 +1,15 @@
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import ActivityFormModal from "../../components/activity-form-modal/ActivityFormModal";
-import PartFormModal from "../../components/party-form-modal/PartFormModal";
+import LocationFormModal from "../../components/location-form-modal/LocationFormModal";
 import { SearchBar } from "../../components/search-bar/SearchBar";
-import UnitFormModal from "../../components/unit-form-modal/UnitFormModal";
 import { useDebounce } from "../../hooks/useDebounce";
 import { getItemsData } from "../../utils/httpRequests";
 import { columns, formField } from "./table.const";
 
 const colNames: any = columns.map((item) => item.field);
 
-const Activity = () => {
+const Location = () => {
   const [openAddNew, setOpenAddNew] = useState(false);
   const [rows, setRows] = useState([]);
   const [total, setTotal] = useState(0);
@@ -49,14 +47,14 @@ const Activity = () => {
   return (
     <div className="flex h-full">
       {openAddNew && (
-        <ActivityFormModal
+        <LocationFormModal
           onSubmit={handleSubmit}
           open={openAddNew}
           onClose={() => setOpenAddNew(false)}
           list={formField}
           values={editRowData}
           isNew={!rows.length}
-          newItemData={{ sizeName: search }}
+          newItemData={{ locationName: search }}
         />
       )}
       {!!document.getElementById("dashboardOutletUtiltiyContainer") && (
@@ -94,4 +92,4 @@ const Activity = () => {
   );
 };
 
-export default Activity;
+export default Location;

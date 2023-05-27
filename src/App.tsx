@@ -3,10 +3,12 @@ import "./App.css";
 import DashBoardOutlet from "./outlets/dashboard-outlet/DashBoardOutlet";
 import MainOutlet from "./outlets/main-outlet/MainOutlet";
 import Dashboard from "./pages/dashboard/Dashboard";
+import Activity from "./section/activity/Activity";
 import Items from "./section/items/Items";
 import Party from "./section/party/Party";
 import Size from "./section/sizes/Size";
 import Unit from "./section/unit/Unit";
+import Location from "./section/location/Location";
 
 function App() {
   const router = createBrowserRouter([
@@ -50,11 +52,11 @@ function App() {
             },
             {
               path: "location",
-              element: <div>Location</div>,
+              element: <Location />,
             },
             {
               path: "activity",
-              element: <div>Activity</div>,
+              element: <Activity />,
             },
             {
               path: "size",

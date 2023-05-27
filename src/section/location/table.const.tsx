@@ -2,8 +2,8 @@ import { GridColDef } from "@mui/x-data-grid";
 
 export const columns: GridColDef[] = [
   {
-    field: "activityName",
-    headerName: (<div className="font-bold">{"Activity Name"}</div>) as any,
+    field: "locationName",
+    headerName: (<div className="font-bold">{"Location Name"}</div>) as any,
     minWidth: 150,
   },
   {
@@ -15,8 +15,8 @@ export const columns: GridColDef[] = [
 
 export const formField = [
   {
-    name: "activityName",
-    placeholder: "Activity Name",
+    name: "locationName",
+    placeholder: "Location Name",
     type: "text",
   },
   {
