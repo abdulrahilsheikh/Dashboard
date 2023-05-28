@@ -1,7 +1,6 @@
-import { MenuItem, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { useEffect } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
-import { bomColumns } from "../../section/style/table.const";
 
 type Props = { mainRef: any };
 
@@ -11,7 +10,7 @@ const Operations = ({ mainRef }: Props) => {
       operations: [
         {
           operationName: "",
-          operationStartName: "",
+          operationShortName: "",
           machine: "",
           time: "",
           rate: 0,
@@ -26,7 +25,7 @@ const Operations = ({ mainRef }: Props) => {
   const addToFields = () => {
     append({
       operationName: "",
-      operationStartName: "",
+      operationShortName: "",
       machine: "",
       time: "",
       rate: 0,
@@ -79,17 +78,17 @@ const Operations = ({ mainRef }: Props) => {
             />
             <Controller
               control={control}
-              name={`operations.${index}.operationStartName`}
+              name={`operations.${index}.operationShortName`}
               render={({ field }) => (
                 <TextField
                   className={"flex-1"}
                   {...field}
                   required={true}
-                  label={"Operation Start Name"}
+                  label={"Operation Short Name"}
                   variant="outlined"
                   sx={{ label: { textTransform: "capitalize" } }}
                   value={getValues(
-                    `operations.${index}.operationStartName`
+                    `operations.${index}.operationShortName`
                   ).trim()}
                 />
               )}

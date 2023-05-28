@@ -124,22 +124,24 @@ export const manufacturingColumns: GridColDef[] = [
 ];
 export const operationsColumns: GridColDef[] = [
   styleId,
-  // {
-  //   flex: 1,
-  //   field: "sizes",
-  //   headerName: (<div className="font-bold">{"Sizes"}</div>) as any,
-  //   minWidth: 150,
-  //   resizable: true,
-  //   renderCell: (param) => (
-  //     <div className="flex gap-4 overflow-auto no-scrollbar">
-  //       {param.value.map((item: any) => (
-  //         <div className="bg-blue-100 p-2 text-center min-w-[2.5rem] rounded">
-  //           {item}
-  //         </div>
-  //       ))}
-  //     </div>
-  //   ),
-  // },
+  {
+    flex: 1,
+    field: "operationShortName",
+    headerName: (
+      <div className="font-bold">{"Operation Short Name"}</div>
+    ) as any,
+    minWidth: 150,
+    resizable: true,
+    renderCell: (param) => (
+      <div className="flex gap-4 overflow-auto no-scrollbar">
+        {param.value.map((item: any) => (
+          <div className="bg-blue-100 p-2 text-center min-w-[2.5rem] rounded">
+            {item}
+          </div>
+        ))}
+      </div>
+    ),
+  },
 ];
 export const pictureColumns: GridColDef[] = [
   styleId,

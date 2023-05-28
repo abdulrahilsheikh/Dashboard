@@ -30,6 +30,7 @@ const Style = () => {
       });
       temp["id"] = idx;
       temp["itemNames"] = ["sm", "xl", "2xl", "3xl", "lg"];
+      temp["operationShortName"] = ["sm", "xl", "2xl", "3xl", "lg"];
       temp["process"] = ["sm", "xl", "2xl", "3xl", "lg"];
       temp["supplierSpec"] = [{ header: "Abc", sizeValue: "20mm" }];
       return temp;
