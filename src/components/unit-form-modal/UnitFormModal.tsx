@@ -82,7 +82,7 @@ const UnitFormModal = ({
             <div className="font-semibold text-lg">Short Name</div>
           </div>
           <div className="flex flex-col gap-4">
-            {fields.map((item, index) => (
+            {fields.map((_, index) => (
               <div className="grid grid-cols-[3rem_1fr_1fr] gap-4 justify-center content-center items-center">
                 <div onClick={() => removeFromList(index)}>
                   <div className="transition-all bg-red-200 flex items-center justify-center h-10 w-10 cursor-pointer rounded-full hover:bg-red-500">
@@ -90,14 +90,6 @@ const UnitFormModal = ({
                   </div>
                 </div>
 
-                {/* <TextField
-                  className={"cap"}
-                  {...register(`fields.${index}.unitName`)}
-                  label={list[0].placeholder}
-                  variant="outlined"
-                  sx={{ label: { textTransform: "capitalize" } }}
-                  value={getValues(`fields.${index}.unitName`)}
-                /> */}
                 <Controller
                   control={control}
                   name={`fields.${index}.unitName`}
@@ -109,6 +101,7 @@ const UnitFormModal = ({
                       variant="outlined"
                       sx={{ label: { textTransform: "capitalize" } }}
                       value={getValues(`fields.${index}.unitName`)}
+                      required={true}
                     />
                   )}
                 />
@@ -123,6 +116,7 @@ const UnitFormModal = ({
                       variant="outlined"
                       sx={{ label: { textTransform: "capitalize" } }}
                       value={getValues(`fields.${index}.shortName`)}
+                      required={true}
                     />
                   )}
                 />

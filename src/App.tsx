@@ -9,6 +9,8 @@ import Party from "./section/party/Party";
 import Size from "./section/sizes/Size";
 import Unit from "./section/unit/Unit";
 import Location from "./section/location/Location";
+import Process from "./section/process/Process";
+import Group from "./section/group/Group";
 
 function App() {
   const router = createBrowserRouter([
@@ -40,7 +42,7 @@ function App() {
             },
             {
               path: "process",
-              element: <div>Process</div>,
+              element: <Process />,
             },
             {
               path: "items",
@@ -48,7 +50,7 @@ function App() {
             },
             {
               path: "group",
-              element: <div>Group</div>,
+              element: <Group />,
             },
             {
               path: "location",

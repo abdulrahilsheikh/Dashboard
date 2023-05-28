@@ -6,10 +6,11 @@ type Props = {
   open: boolean;
   onClose: () => void;
   list: AddNewItemModalOptions[];
-  values: { sizeName: string; sizes: string[] };
+  values: { processName: string; activities: string[] };
   isNew: boolean;
   newItemData: { [key: string]: string };
   onSubmit: (data: any) => void;
+  options: Option[];
 };
 export interface AddNewItemModalOptions {
   name: string;
@@ -22,7 +23,7 @@ export interface Option {
   label: string;
   value: string;
 }
-const SizeFormModal = ({
+const ProcessFormModal = ({
   open,
   onClose,
   list,
@@ -30,36 +31,25 @@ const SizeFormModal = ({
   isNew,
   newItemData,
   onSubmit,
+  options,
 }: Props) => {
   const inital = isNew
-    ? { sizeName: newItemData.sizeName, sizes: [" "] }
-    : { sizeName: values.sizeName, sizes: [...values.sizes] };
+    ? { processName: newItemData.processName, activities: [" "] }
+    : { processName: values.processName, activities: [...values.activities] };
   const { control, getValues, handleSubmit, setValue } = useForm({
     defaultValues: inital,
   });
-  const [count, setCount] = useState(inital.sizes.length);
-  const { fields, append } = useFieldArray<any, any, any>({
+  const [count, setCount] = useState(inital.activities.length);
+  const { fields, append, remove } = useFieldArray<any, any, any>({
     control,
-    name: "sizes",
+    name: "activities",
   });
   const ref = useRef<any>(null);
-
-  useEffect(() => {
-    if (count < getValues("sizes").length) {
-      const temp = getValues("sizes").slice(0, count);
-      setValue("sizes", temp);
-    } else {
-      const diff = count - getValues("sizes").length;
-      for (let i = 0; i < diff; i++) {
-        append(" ");
-      }
-    }
-  }, [count]);
-  const countSetter = (e: React.BaseSyntheticEvent) => {
-    const val = +e.target.value;
-    if (val > 0) {
-      setCount(val);
-    }
+  const addToFields = () => {
+    append(" ");
+  };
+  const removeFromList = (idx: number) => {
+    remove(idx);
   };
   return (
     <Modal
@@ -86,10 +76,10 @@ const SizeFormModal = ({
         </div>
         <div className="flex flex-col gap-4">
           <div className="flex gap-4 items-center">
-            <div className="font-semibold text-lg">Size Name</div>
+            <div className="font-semibold text-lg">Process Name</div>
             <Controller
               control={control}
-              name={`sizeName`}
+              name={`processName`}
               render={({ field }) => (
                 <TextField
                   className={"cap"}
@@ -97,46 +87,49 @@ const SizeFormModal = ({
                   label={list[0].placeholder}
                   variant="outlined"
                   sx={{ label: { textTransform: "capitalize" } }}
-                  value={getValues(`sizeName`)}
+                  value={getValues(`processName`)}
                   required={true}
                 />
               )}
             />
-          </div>
-          <div className="flex gap-4 items-center">
-            <div className="font-semibold text-lg">Size Count</div>
-
-            <TextField
-              onChange={countSetter}
-              type="number"
-              className={"cap"}
-              label={"Size Count"}
-              variant="outlined"
-              sx={{ label: { textTransform: "capitalize" } }}
-              value={count}
-              required={true}
-            />
+            <div onClick={addToFields}>
+              <div className="transition-all bg-blue-200 flex items-center justify-center h-10 w-10 cursor-pointer rounded-full hover:bg-blue-500">
+                <i className="fa-solid fa-plus"></i>
+              </div>
+            </div>
           </div>
 
           <div className="flex flex-col gap-4">
-            <div className="font-semibold text-lg">Sizes</div>
+            <div className="font-semibold text-lg">Activities</div>
             <div className="grid grid-cols-5 gap-4 flex-wrap w-full">
               {fields.map((_, index) => (
-                <Controller
-                  control={control}
-                  name={`sizes.${index}`}
-                  render={({ field }) => (
-                    <TextField
-                      className={"flex-1 min-w-[10rem]"}
-                      {...field}
-                      label={list[1].placeholder}
-                      variant="outlined"
-                      sx={{ label: { textTransform: "capitalize" } }}
-                      value={getValues(`sizes.${index}`).trim()}
-                      required={true}
-                    />
-                  )}
-                />
+                <div className="flex items-center gap-2">
+                  <div onClick={() => removeFromList(index)}>
+                    <div className="transition-all bg-red-200 flex items-center justify-center h-10 w-10 cursor-pointer rounded-full hover:bg-red-500">
+                      <i className="fa-solid fa-xmark"></i>
+                    </div>
+                  </div>
+                  <Controller
+                    control={control}
+                    name={`activities.${index}`}
+                    render={({ field }) => (
+                      <TextField
+                        className={"flex-1 min-w-[10rem]"}
+                        {...field}
+                        label={list[1].placeholder}
+                        variant="outlined"
+                        sx={{ label: { textTransform: "capitalize" } }}
+                        value={getValues(`activities.${index}`).trim()}
+                        required={true}
+                        select
+                      >
+                        {options?.map((field) => (
+                          <MenuItem value={field.value}>{field.label}</MenuItem>
+                        ))}
+                      </TextField>
+                    )}
+                  />
+                </div>
               ))}
             </div>
           </div>
@@ -146,4 +139,4 @@ const SizeFormModal = ({
   );
 };
 
-export default SizeFormModal;
+export default ProcessFormModal;

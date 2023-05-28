@@ -97,6 +97,7 @@ const ActivityFormModal = ({
                     <TextField
                       className={"cap"}
                       {...field}
+                      required={true}
                       label={list[0].placeholder}
                       variant="outlined"
                       sx={{ label: { textTransform: "capitalize" } }}
@@ -111,6 +112,7 @@ const ActivityFormModal = ({
                     <TextField
                       className={"cap"}
                       {...field}
+                      required={true}
                       multiline
                       minRows={4}
                       label={list[1].placeholder}

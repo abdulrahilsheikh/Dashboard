@@ -67,6 +67,7 @@ const AddNewItemModal = ({
                 label={item.placeholder}
                 variant="outlined"
                 sx={{ label: { textTransform: "capitalize" } }}
+                required={true}
               />
             ) : (
               <TextField
@@ -76,6 +77,7 @@ const AddNewItemModal = ({
                 defaultValue={values[item.name]}
                 label={item.placeholder}
                 placeholder={item.placeholder}
+                required={true}
               >
                 {item!.options?.map((field) => (
                   <MenuItem value={field.value}>{field.label}</MenuItem>

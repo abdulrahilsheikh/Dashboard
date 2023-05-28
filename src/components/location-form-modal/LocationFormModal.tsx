@@ -103,6 +103,7 @@ const LocationFormModal = ({
                       variant="outlined"
                       sx={{ label: { textTransform: "capitalize" } }}
                       value={getValues(`fields.${index}.locationName`)}
+                      required={true}
                     />
                   )}
                 />
@@ -119,6 +120,7 @@ const LocationFormModal = ({
                       variant="outlined"
                       sx={{ label: { textTransform: "capitalize" } }}
                       value={getValues(`fields.${index}.description`)}
+                      required={true}
                     />
                   )}
                 />
