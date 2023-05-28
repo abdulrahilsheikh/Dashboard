@@ -23,7 +23,7 @@ const DashBoardOutlet = (props: Props) => {
   const url = useLocation();
   const list = url.pathname.split("/").slice(1);
   useEffect(() => {
-    setActive(list[list.length - 1]);
+    setActive(list[2]);
   }, [url.pathname]);
   return (
     <DashboardOutletContext.Provider value={{ setUtils }}>

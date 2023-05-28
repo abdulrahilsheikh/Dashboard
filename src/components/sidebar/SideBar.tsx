@@ -16,7 +16,7 @@ type Props = {
 const menuItems: any = {
   dashboard: {
     title: "Dashboard",
-    children: [{ label: "Purchase Order", to: "master" }],
+    children: [{ label: "Purchase Order", to: "/dashboard/master" }],
   },
   admin: { title: "Admin", children: [{ label: "User Managment", to: "" }] },
   "work-order": {
@@ -65,8 +65,12 @@ const SideBar = ({ open, onClose, openNavigationPane }: Props) => {
   const navigate = useNavigate();
   useEffect(() => {
     console.log(pathname);
-    const temp: any = pathname.split("/")[1];
-    setActiveWindow(menuItems[temp]);
+    if (pathname == "/") {
+      setActiveWindow(menuItems.dashboard);
+    } else {
+      const temp: any = pathname.split("/")[1];
+      setActiveWindow(menuItems[temp]);
+    }
   }, [pathname]);
   return (
     <Drawer open={open} onClose={onClose}>

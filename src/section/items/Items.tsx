@@ -196,6 +196,7 @@ const Items = (props: Props) => {
         <>
           {createPortal(
             <SearchBar
+              heading={"Item"}
               rows={rows}
               setSearch={setSearch}
               search={search}

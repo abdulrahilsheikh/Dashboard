@@ -1,16 +1,14 @@
+import { Box, Tab, Tabs } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { SearchBar } from "../../components/search-bar/SearchBar";
-import SizeFormModal from "../../components/size-form-modal/SizeFormModal";
-import UnitFormModal from "../../components/unit-form-modal/UnitFormModal";
+import StyleFormModal from "../../components/style-form-modal/StyleFormModal";
 import { useDebounce } from "../../hooks/useDebounce";
 import { getItemsData } from "../../utils/httpRequests";
-import { columns, formField } from "./table.const";
+import { columns, formField, tabList } from "./table.const";
 
-const colNames: any = columns.map((item) => item.field);
-
-const Size = () => {
+const Style = () => {
   const [openAddNew, setOpenAddNew] = useState(false);
   const [rows, setRows] = useState([]);
   const [total, setTotal] = useState(0);
@@ -18,6 +16,7 @@ const Size = () => {
   const [pageInfo, setPageInfo] = useState({ page: 0, pageSize: 25 });
   const [editRowData, setEditRowData] = useState<any>({});
   const searchParm = useDebounce(search, 150);
+  const [activeTab, setActiveTab] = useState("general");
   const getdataFromServer = async () => {
     const data = await getItemsData({
       page: +pageInfo.page,
@@ -30,14 +29,15 @@ const Size = () => {
         temp[colNames[idx]] = obj;
       });
       temp["id"] = idx;
-      temp["sizes"] = ["sm", "xl", "2xl", "3xl", "lg"];
+      temp["itemNames"] = ["sm", "xl", "2xl", "3xl", "lg"];
+      temp["process"] = ["sm", "xl", "2xl", "3xl", "lg"];
+      temp["supplierSpec"] = [{ header: "Abc", sizeValue: "20mm" }];
       return temp;
     });
     setTotal(data.recordsTotal);
     setRows(items);
   };
-
-  useEffect(() => {}, []);
+  const colNames: any = columns[activeTab].map((item: any) => item.field);
   useEffect(() => {
     getdataFromServer();
   }, [searchParm, pageInfo]);
@@ -45,23 +45,21 @@ const Size = () => {
     console.log(e);
   };
   return (
-    <div className="flex h-full">
+    <div className="flex h-full flex-col">
       {openAddNew && (
-        <SizeFormModal
-          onSubmit={handleSubmit}
+        <StyleFormModal
           open={openAddNew}
           onClose={() => setOpenAddNew(false)}
-          list={formField}
-          values={editRowData}
-          isNew={!rows.length}
-          newItemData={{ sizeName: search }}
+          tabList={tabList}
+          styleId={editRowData.styleId}
+          parentActiveTab={activeTab}
         />
       )}
       {!!document.getElementById("dashboardOutletUtiltiyContainer") && (
         <>
           {createPortal(
             <SearchBar
-              heading={"Size"}
+              heading={"Style"}
               rows={rows}
               setSearch={setSearch}
               search={search}
@@ -71,7 +69,22 @@ const Size = () => {
           )}
         </>
       )}
-      <div style={{ height: "100%", width: "100%" }}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs
+          value={activeTab}
+          onChange={(_, value) => setActiveTab(value)}
+          aria-label="basic tabs"
+        >
+          {tabList.map((tb) => (
+            <Tab
+              value={tb.value}
+              label={tb.label}
+              id={`simple-tab-${tb.value}`}
+            />
+          ))}
+        </Tabs>
+      </Box>
+      <div style={{ minHeight: "80%", width: "100%", flex: 1 }}>
         <DataGrid
           sx={{
             header: { fontStyle: "bold" },
@@ -79,7 +92,7 @@ const Size = () => {
           }}
           rows={rows}
           rowCount={total}
-          columns={columns}
+          columns={columns[activeTab]}
           onRowClick={(item) => {
             setEditRowData(item.row);
             setOpenAddNew(true);
@@ -93,4 +106,4 @@ const Size = () => {
   );
 };
 
-export default Size;
+export default Style;

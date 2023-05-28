@@ -11,6 +11,7 @@ import Unit from "./section/unit/Unit";
 import Location from "./section/location/Location";
 import Process from "./section/process/Process";
 import Group from "./section/group/Group";
+import Style from "./section/style/Style";
 
 function App() {
   const router = createBrowserRouter([
@@ -38,7 +39,7 @@ function App() {
             },
             {
               path: "style",
-              element: <div>Style</div>,
+              element: <Style />,
             },
             {
               path: "process",

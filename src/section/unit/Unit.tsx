@@ -62,6 +62,7 @@ const Unit = () => {
         <>
           {createPortal(
             <SearchBar
+              heading={"Unit"}
               rows={rows}
               setSearch={setSearch}
               search={search}

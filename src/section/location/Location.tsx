@@ -61,6 +61,7 @@ const Location = () => {
         <>
           {createPortal(
             <SearchBar
+              heading={"Location"}
               rows={rows}
               setSearch={setSearch}
               search={search}

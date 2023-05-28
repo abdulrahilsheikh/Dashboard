@@ -69,6 +69,7 @@ const Party = () => {
         <>
           {createPortal(
             <SearchBar
+              heading={"Party"}
               rows={rows}
               setSearch={setSearch}
               search={search}

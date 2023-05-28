@@ -92,6 +92,7 @@ const Group = () => {
         <>
           {createPortal(
             <SearchBar
+              heading={"Group"}
               rows={rows}
               setSearch={setSearch}
               search={search}

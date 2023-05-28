@@ -1,4 +1,10 @@
-export const SearchBar = ({ search, rows, setSearch, setOpenAddNew }: any) => (
+export const SearchBar = ({
+  heading,
+  search,
+  rows,
+  setSearch,
+  setOpenAddNew,
+}: any) => (
   <form className="flex gap-4 justify-center p-1 mr-2">
     {search && !rows.length && (
       <button
@@ -6,7 +12,7 @@ export const SearchBar = ({ search, rows, setSearch, setOpenAddNew }: any) => (
         type="button"
         className="inline-block rounded-xl border border-indigo-600 bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
       >
-        Add new item
+        Add new {heading}
       </button>
     )}
     <input

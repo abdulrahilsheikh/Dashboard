@@ -116,7 +116,7 @@ const ProcessFormModal = ({
                       <TextField
                         className={"flex-1 min-w-[10rem]"}
                         {...field}
-                        label={list[1].placeholder}
+                        label={`${index + 1} ${list[1].placeholder}`}
                         variant="outlined"
                         sx={{ label: { textTransform: "capitalize" } }}
                         value={getValues(`activities.${index}`).trim()}

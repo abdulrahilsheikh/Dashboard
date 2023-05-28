@@ -74,6 +74,7 @@ const Process = () => {
         <>
           {createPortal(
             <SearchBar
+              heading={"Process"}
               rows={rows}
               setSearch={setSearch}
               search={search}

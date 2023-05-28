@@ -63,6 +63,7 @@ const Activity = () => {
         <>
           {createPortal(
             <SearchBar
+              heading={"Activity"}
               rows={rows}
               setSearch={setSearch}
               search={search}
