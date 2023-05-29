@@ -10,8 +10,8 @@ const styleId: GridColDef = {
 export const generalColumns: GridColDef[] = [
   styleId,
   {
-    field: "shiftName",
-    headerName: "Shift Name",
+    field: "styleName",
+    headerName: "Style Name",
     renderHeader: (param) => (
       <div className="font-bold">{param.colDef.headerName}</div>
     ),

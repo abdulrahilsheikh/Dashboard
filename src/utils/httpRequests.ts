@@ -13,10 +13,19 @@ export const getItemsData = async (params: any) => {
 
   return res;
 };
+export const getPartyData = async (params: any) => {
+  const data = await fetch(
+    "http://103.94.110.212:85/malad/api/master/party_out.php"
+  );
+  const res = await data.json();
+  console.log(res);
+
+  return res;
+};
 
 export const sendToParty = async (data: any) => {
   const res = await fetch(
-    "http://103.94.110.212:85/malad/api/master/party.php",
+    "http://103.94.110.212:85/malad/api/master/party_in.php",
     {
       method: "POST",
       body: JSON.stringify({ data: data }),

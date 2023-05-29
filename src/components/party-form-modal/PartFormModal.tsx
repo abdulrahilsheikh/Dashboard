@@ -49,12 +49,17 @@ const PartFormModal = ({
       >
         <div className="flex justify-between mb-4">
           <div className=" text-lg">{isNew ? "Add New Item" : "Edit Item"}</div>
-          <button
-            type="submit"
-            className="inline-block rounded-xl border border-indigo-600 bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
-          >
-            Save
-          </button>
+          <div className="flex gap-4">
+            <button className="inline-block rounded-xl border border-red-600 bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500">
+              Delete
+            </button>
+            <button
+              type="submit"
+              className="inline-block rounded-xl border border-indigo-600 bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
+            >
+              Save
+            </button>
+          </div>
         </div>
         <div className="grid grid-cols-3 gap-4">
           {localList.map((list) => (

@@ -1,0 +1,76 @@
+Activity:{
+    activityName:"",
+    description:""
+}
+
+Group:{
+    groupName:'',
+    groupType:'',
+    groupItems:['items']
+}
+
+Item:{
+    name:'',
+    itemSelect:'',
+    itemType:'',
+    itemColor:"",
+    specification:'',
+    moq:1,
+    bufferUnit:1,
+    purchaseUnit:1,
+    issueUnit:1,
+    purchaseIssueRatio:1,
+    rate:1,
+    gst:"",
+    hsnCode:'',
+    openingStock:1,
+    msc1:"",
+    msc2:"",
+}
+
+Location:{
+    locationName:'',
+    description:""
+}
+
+Party:{
+    companyName:'',
+    contactPerson:"",
+    address:"",
+    city:"",
+    state:'',
+    pin:'',
+    role:"",
+    email:"",
+    landline:"",
+    mobile:"",
+    gst:'',
+    pan:"",
+    bank:'',
+    account:"",
+    ifsc:'',
+    openingBalance:'',
+}
+
+Process:{
+    processName:'',
+    activities:["activty"]
+}
+
+Size:{
+    sizeName:'',
+    sizes:['size']
+}
+
+Style ---
+General : {
+    shiftName: '',
+    refName: '',
+    season: '',
+    category: '',
+    designer: '',
+    misc1: '',
+    misc2: '',
+    misc3: '',
+    misc4: ''
+  }

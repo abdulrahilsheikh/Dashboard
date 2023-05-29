@@ -2,95 +2,143 @@ import { GridColDef } from "@mui/x-data-grid";
 
 export const columns: GridColDef[] = [
   {
-    field: "companyName",
-    headerName: (<div className="font-bold">{"Company Name"}</div>) as any,
+    field: "company_name",
+    headerName: "Company Name",
+    renderHeader: (param) => (
+      <div className="font-bold">{param.colDef.headerName}</div>
+    ),
     minWidth: 150,
   },
   {
-    field: "contactPerson",
-    headerName: (<div className="font-bold">{"Contact Person"}</div>) as any,
+    field: "contact_person",
+    headerName: "Contact Person",
+    renderHeader: (param) => (
+      <div className="font-bold">{param.colDef.headerName}</div>
+    ),
     width: 150,
   },
   {
     field: "address",
-    headerName: (<div className="font-bold">{"Address"}</div>) as any,
+    headerName: "Address",
+    renderHeader: (param) => (
+      <div className="font-bold">{param.colDef.headerName}</div>
+    ),
     width: 150,
   },
   {
     field: "city",
-    headerName: (<div className="font-bold">{"City"}</div>) as any,
+    headerName: "City",
+    renderHeader: (param) => (
+      <div className="font-bold">{param.colDef.headerName}</div>
+    ),
     width: 150,
   },
   {
     field: "state",
-    headerName: (<div className="font-bold">{"State"}</div>) as any,
+    headerName: "State",
+    renderHeader: (param) => (
+      <div className="font-bold">{param.colDef.headerName}</div>
+    ),
     width: 150,
   },
   {
     field: "pin",
-    headerName: (<div className="font-bold">{"pin"}</div>) as any,
+    headerName: "pin",
+    renderHeader: (param) => (
+      <div className="font-bold">{param.colDef.headerName}</div>
+    ),
     width: 150,
   },
   {
     field: "role",
-    headerName: (<div className="font-bold">{"Role"}</div>) as any,
+    headerName: "Role",
+    renderHeader: (param) => (
+      <div className="font-bold">{param.colDef.headerName}</div>
+    ),
     width: 150,
   },
   {
     field: "email",
-    headerName: (<div className="font-bold">{"Email"}</div>) as any,
+    headerName: "Email",
+    renderHeader: (param) => (
+      <div className="font-bold">{param.colDef.headerName}</div>
+    ),
     width: 150,
   },
   {
     field: "landline",
-    headerName: (<div className="font-bold">{"Land Line"}</div>) as any,
+    headerName: "Land Line",
+    renderHeader: (param) => (
+      <div className="font-bold">{param.colDef.headerName}</div>
+    ),
     width: 150,
   },
   {
     field: "mobile",
-    headerName: (<div className="font-bold">{"Mobile"}</div>) as any,
+    headerName: "Mobile",
+    renderHeader: (param) => (
+      <div className="font-bold">{param.colDef.headerName}</div>
+    ),
     width: 150,
   },
   {
     field: "gst",
-    headerName: (<div className="font-bold">{"GST"}</div>) as any,
+    headerName: "GST",
+    renderHeader: (param) => (
+      <div className="font-bold">{param.colDef.headerName}</div>
+    ),
     width: 150,
   },
   {
     field: "pan",
-    headerName: (<div className="font-bold">{"PAN"}</div>) as any,
+    headerName: "PAN",
+    renderHeader: (param) => (
+      <div className="font-bold">{param.colDef.headerName}</div>
+    ),
     width: 150,
   },
   {
     field: "bank",
-    headerName: (<div className="font-bold">{"Bank"}</div>) as any,
+    headerName: "Bank",
+    renderHeader: (param) => (
+      <div className="font-bold">{param.colDef.headerName}</div>
+    ),
     width: 150,
   },
   {
     field: "account",
-    headerName: (<div className="font-bold">{"Account"}</div>) as any,
+    headerName: "Account",
+    renderHeader: (param) => (
+      <div className="font-bold">{param.colDef.headerName}</div>
+    ),
     width: 150,
   },
   {
     field: "ifsc",
-    headerName: (<div className="font-bold">{"IFSC"}</div>) as any,
+    headerName: "IFSC",
+    renderHeader: (param) => (
+      <div className="font-bold">{param.colDef.headerName}</div>
+    ),
     width: 150,
   },
   {
-    field: "openingBalance",
-    headerName: (<div className="font-bold">{"Opening Balance"}</div>) as any,
+    field: "open_bal",
+    headerName: "Opening Balance",
+    renderHeader: (param) => (
+      <div className="font-bold">{param.colDef.headerName}</div>
+    ),
     width: 150,
   },
 ];
 
 export const formField = [
   {
-    name: "companyName",
+    name: "company_name",
     placeholder: "Company Name",
     type: "text",
   },
   {
-    name: "contactPerson",
+    name: "contact_person",
     placeholder: "Contact Person",
     type: "text",
   },
@@ -165,7 +213,7 @@ export const formField = [
     type: "text",
   },
   {
-    name: "openingBalance",
+    name: "open_bal",
     placeholder: "Opening Balance",
     type: "text",
   },
