@@ -4,116 +4,71 @@ import ReactApexChart from "react-apexcharts";
 type Props = {};
 
 const StackedBarGraph = ({}: Props) => {
-  const options: any = {
+  const series = [
+    {
+      name: "Q1 Budget",
+      group: "budget",
+      data: [44000, 55000, 41000, 67000, 22000],
+    },
+    {
+      name: "Q1 Actual",
+      group: "actual",
+      data: [48000, 50000, 40000, 65000, 25000],
+    },
+    {
+      name: "Q2 Budget",
+      group: "budget",
+      data: [13000, 36000, 20000, 8000, 13000],
+    },
+    {
+      name: "Q2 Actual",
+      group: "actual",
+      data: [20000, 40000, 25000, 10000, 12000],
+    },
+  ];
+  const options = {
     chart: {
       type: "bar",
-      width: "100%",
+      height: 350,
       stacked: true,
-      toolbar: {
-        show: false,
-      },
-      zoom: {
-        enabled: false,
-      },
     },
-
+    stroke: {
+      width: 1,
+      colors: ["#fff"],
+    },
     dataLabels: {
-      enabled: false,
-    },
-    grid: {
-      show: false, // you can either change hear to disable all grids
-      xaxis: {
-        lines: {
-          show: false, //or just here to disable only x axis grids
-        },
-      },
-      yaxis: {
-        lines: {
-          show: false, //or just here to disable only y axis
-        },
+      formatter: (val) => {
+        return val / 1000 + "K";
       },
     },
-    responsive: [
-      {
-        breakpoint: 480,
-        options: {
-          legend: {
-            position: "bottom",
-            offsetX: -10,
-            offsetY: 0,
-          },
-        },
-      },
-    ],
     plotOptions: {
       bar: {
-        horizontal: false,
-        borderRadius: 10,
-        dataLabels: {
-          total: {
-            enabled: true,
-            style: {
-              fontSize: "13px",
-              fontWeight: 900,
-            },
-          },
-        },
+        horizontal: true,
       },
     },
     xaxis: {
-      type: "datetime",
       categories: [
-        "01/01/2011 GMT",
-        "01/02/2011 GMT",
-        "01/03/2011 GMT",
-        "01/04/2011 GMT",
-        "01/05/2011 GMT",
-        "01/06/2011 GMT",
-        "01/07/2011 GMT",
-        "01/08/2011 GMT",
-        "01/09/2011 GMT",
+        "Online advertising",
+        "Sales Training",
+        "Print advertising",
+        "Catalogs",
+        "Meetings",
       ],
       labels: {
-        show: false,
+        formatter: (val) => {
+          return val / 1000 + "K";
+        },
       },
-      axisBorder: {
-        show: false,
-      },
-      axisTicks: {
-        show: false,
-      },
-    },
-    yaxis: {
-      labels: {
-        show: false,
-      },
-    },
-    legend: {
-      enabled: false,
-      show: false,
     },
     fill: {
       opacity: 1,
     },
+    colors: ["#80c7fd", "#008FFB", "#80f1cb", "#00E396"],
+    legend: {
+      position: "top",
+      horizontalAlign: "left",
+    },
   };
-  const series = [
-    {
-      name: "PRODUCT A",
-      data: [44, 55, 41, 67, 22, 43, 44, 55, 41],
-    },
-    {
-      name: "PRODUCT B",
-      data: [13, 23, 20, 8, 13, 27, 13, 23, 20],
-    },
-    {
-      name: "PRODUCT C",
-      data: [11, 17, 15, 15, 21, 14, 11, 17, 15],
-    },
-    {
-      name: "PRODUCT D",
-      data: [21, 7, 25, 13, 22, 8, 21, 7, 25],
-    },
-  ];
   return <ReactApexChart options={options} series={series} type="bar" />;
 };
 

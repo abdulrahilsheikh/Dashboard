@@ -55,14 +55,16 @@ const Party = () => {
           onClose={() => setOpenAddNew(false)}
           list={formField}
           values={editRowData}
-          isNew={!rows.length}
-          newItemData={{ party: search }}
+          // isNew={!rows.length }
+          isNew={!!search}
+          newItemData={{ company_name: search }}
         />
       }
       {!!document.getElementById("dashboardOutletUtiltiyContainer") && (
         <>
           {createPortal(
             <SearchBar
+              isVisible={true}
               heading={"Party"}
               rows={rows}
               setSearch={setSearch}

@@ -69,7 +69,7 @@ const NavigationModal = ({ open, onClose, closeAll }: Props) => {
                   className="cursor-pointer flex  flex-col items-center bg-white p-6 rounded gap-4"
                 >
                   <div className=" bg-blue-100 rounded-full p-2">
-                    <img className=" w-8 h-full" src={item.icon} />
+                    <img className="w-8 h-full" src={item.icon} />
                   </div>
                   <div>{item.title}</div>
                 </div>

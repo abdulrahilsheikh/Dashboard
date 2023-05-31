@@ -4,9 +4,19 @@ export const SearchBar = ({
   rows,
   setSearch,
   setOpenAddNew,
+  isVisible,
 }: any) => (
   <form className="flex gap-4 justify-center p-1 mr-2">
     {search && !rows.length && (
+      <button
+        onClick={setOpenAddNew}
+        type="button"
+        className="inline-block rounded-xl border border-indigo-600 bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
+      >
+        Add new {heading}
+      </button>
+    )}
+    {isVisible && (
       <button
         onClick={setOpenAddNew}
         type="button"

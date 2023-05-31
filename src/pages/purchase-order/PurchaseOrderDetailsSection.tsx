@@ -7,7 +7,7 @@ type Props = {};
 const PurchaseOrderDetailsSection = (props: Props) => {
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex gap-2">
+      <div className="grid grid-cols-4 gap-2">
         <TextFieldModified
           label="PO No :"
           className="flex flex-1 gap-2 items-center"
