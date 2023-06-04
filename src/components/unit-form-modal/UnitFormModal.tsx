@@ -32,8 +32,8 @@ const UnitFormModal = ({
   onSubmit,
 }: Props) => {
   const inital = isNew
-    ? { unitName: newItemData.unitName, shortName: "" }
-    : { unitName: values.unitName, shortName: values.shortName };
+    ? { unit_name: newItemData.unit_name, short_name: "" }
+    : { unit_name: values.unit_name, short_name: values.short_name };
   const { control, register, getValues, handleSubmit } = useForm({
     defaultValues: { fields: [inital] },
   });
@@ -43,7 +43,7 @@ const UnitFormModal = ({
   });
   const ref = useRef<any>(null);
   const addToFields = () => {
-    append({ unitName: "", shortName: "" });
+    append({ unit_name: "", short_name: "" });
   };
   const removeFromList = (idx: number) => {
     remove(idx);
@@ -92,7 +92,7 @@ const UnitFormModal = ({
 
                 <Controller
                   control={control}
-                  name={`fields.${index}.unitName`}
+                  name={`fields.${index}.unit_name`}
                   render={({ field }) => (
                     <TextField
                       className={"cap"}
@@ -100,14 +100,14 @@ const UnitFormModal = ({
                       label={list[0].placeholder}
                       variant="outlined"
                       sx={{ label: { textTransform: "capitalize" } }}
-                      value={getValues(`fields.${index}.unitName`)}
+                      value={getValues(`fields.${index}.unit_name`)}
                       required={true}
                     />
                   )}
                 />
                 <Controller
                   control={control}
-                  name={`fields.${index}.shortName`}
+                  name={`fields.${index}.short_name`}
                   render={({ field }) => (
                     <TextField
                       className={"cap"}
@@ -115,7 +115,7 @@ const UnitFormModal = ({
                       label={list[1].placeholder}
                       variant="outlined"
                       sx={{ label: { textTransform: "capitalize" } }}
-                      value={getValues(`fields.${index}.shortName`)}
+                      value={getValues(`fields.${index}.short_name`)}
                       required={true}
                     />
                   )}

@@ -33,6 +33,7 @@ const PartFormModal = ({
   const ref = useRef<any>(null);
 
   const localList = [list.slice(0, 7), list.slice(7, 7 + 5), list.slice(7 + 5)];
+
   return (
     <Modal
       open={open}

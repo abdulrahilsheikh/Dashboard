@@ -1,19 +1,21 @@
+import { DriveFileRenameOutline, Delete } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 
 export const columns: GridColDef[] = [
   {
-    field: "groupName",
+    field: "group_name",
     headerName: (<div className="font-bold">{"Group Name"}</div>) as any,
     minWidth: 150,
   },
   {
-    field: "groupType",
+    field: "group_type",
     headerName: (<div className="font-bold">{"Group Type"}</div>) as any,
     minWidth: 150,
   },
   {
     flex: 1,
-    field: "groupItems",
+    field: "group_tems",
     headerName: (<div className="font-bold">{"Group Items"}</div>) as any,
     minWidth: 150,
     resizable: true,
@@ -31,11 +33,11 @@ export const columns: GridColDef[] = [
 
 export const formField = [
   {
-    name: "groupName",
+    name: "group_name",
     placeholder: "Group Name",
   },
   {
-    name: "groupType",
+    name: "group_type",
     placeholder: "Group Type",
     options: [
       { label: "Style", value: "Style" },
@@ -45,7 +47,7 @@ export const formField = [
     ],
   },
   {
-    name: "groupItems",
+    name: "group_tems",
     placeholder: "Group Items",
   },
 ];

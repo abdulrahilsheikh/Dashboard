@@ -32,8 +32,8 @@ const LocationFormModal = ({
   onSubmit,
 }: Props) => {
   const inital = isNew
-    ? { locationName: newItemData.locationName, description: "" }
-    : { locationName: values.locationName, description: values.description };
+    ? { location_name: newItemData.location_name, description: "" }
+    : { location_name: values.location_name, description: values.description };
   const { control, register, getValues, handleSubmit } = useForm({
     defaultValues: { fields: [inital] },
   });
@@ -43,7 +43,7 @@ const LocationFormModal = ({
   });
   const ref = useRef<any>(null);
   const addToFields = () => {
-    append({ locationName: "", description: "" });
+    append({ location_name: "", description: "" });
   };
   const removeFromList = (idx: number) => {
     remove(idx);
@@ -94,7 +94,7 @@ const LocationFormModal = ({
 
                 <Controller
                   control={control}
-                  name={`fields.${index}.locationName`}
+                  name={`fields.${index}.location_name`}
                   render={({ field }) => (
                     <TextField
                       className={"cap"}
@@ -102,7 +102,7 @@ const LocationFormModal = ({
                       label={list[0].placeholder}
                       variant="outlined"
                       sx={{ label: { textTransform: "capitalize" } }}
-                      value={getValues(`fields.${index}.locationName`)}
+                      value={getValues(`fields.${index}.location_name`)}
                       required={true}
                     />
                   )}

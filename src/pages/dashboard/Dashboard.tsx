@@ -31,9 +31,9 @@ const Dashboard = ({}: Props) => {
           <div className="flex gap-2 w-full">
             <div className="w-1/2 text-black ">
               <div>
-                <div className="text-lg font-bold">$93,664</div>
+                <div className="text-lg font-bold">&#8377;93,664</div>
                 <div className="text-sm text-gray-500">Budget</div>
-                <div className="text-lg font-bold">$45,664</div>
+                <div className="text-lg font-bold">&#8377;45,664</div>
                 <div className="text-sm text-gray-500"> Expense</div>
               </div>
               <div className="">
@@ -56,7 +56,7 @@ const Dashboard = ({}: Props) => {
           <div className="h-1/2 w-full p-2 bg-blue-500 rounded-2xl">
             <div className="text-xl flex justify-between px-4 pt-2">
               <div>Earnings</div>
-              <div>$65,888</div>
+              <div>&#8377;65,888</div>
             </div>
             <div className="text-end text-sm px-4">Monthly Revenue</div>
             <div className="">
@@ -65,7 +65,7 @@ const Dashboard = ({}: Props) => {
           </div>
           <div className="h-1/2 flex items-center p-4 justify-between">
             <div className="text-black flex-1">
-              <div className="text-xl font-semibold">$6,54,544</div>
+              <div className="text-xl font-semibold">&#8377;6,54,544</div>
               <div className="text-sm text-gray-500 font-semibold">Yearly</div>
             </div>
             <div className="w-4/5">

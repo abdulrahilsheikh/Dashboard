@@ -10,7 +10,7 @@ const styleId: GridColDef = {
 export const generalColumns: GridColDef[] = [
   styleId,
   {
-    field: "styleName",
+    field: "style_name",
     headerName: "Style Name",
     renderHeader: (param) => (
       <div className="font-bold">{param.colDef.headerName}</div>
@@ -18,7 +18,7 @@ export const generalColumns: GridColDef[] = [
     minWidth: 150,
   },
   {
-    field: "refName",
+    field: "ref_name",
     headerName: "Ref Name",
     renderHeader: (param) => (
       <div className="font-bold">{param.colDef.headerName}</div>
@@ -85,7 +85,7 @@ export const generalColumns: GridColDef[] = [
 export const bomColumns: GridColDef[] = [
   styleId,
   {
-    field: "itemNames",
+    field: "item_names",
     headerName: "Item Names",
     flex: 1,
     renderHeader: (param) => (
@@ -126,7 +126,7 @@ export const operationsColumns: GridColDef[] = [
   styleId,
   {
     flex: 1,
-    field: "operationShortName",
+    field: "operations",
     headerName: (
       <div className="font-bold">{"Operation Short Name"}</div>
     ) as any,
@@ -136,7 +136,7 @@ export const operationsColumns: GridColDef[] = [
       <div className="flex gap-4 overflow-auto no-scrollbar">
         {param.value.map((item: any) => (
           <div className="bg-blue-100 p-2 text-center min-w-[2.5rem] rounded">
-            {item}
+            {item.op_shname}
           </div>
         ))}
       </div>
@@ -146,7 +146,7 @@ export const operationsColumns: GridColDef[] = [
 export const pictureColumns: GridColDef[] = [
   styleId,
   {
-    field: "mainPic",
+    field: "main_pic",
     headerName: (<div className="font-bold">{"Main Pic"}</div>) as any,
     minWidth: 150,
     renderCell: (param) => (
@@ -156,7 +156,7 @@ export const pictureColumns: GridColDef[] = [
     ),
   },
   {
-    field: "supplierPic",
+    field: "sup_pic",
     headerName: (<div className="font-bold">{"Supplier Pic"}</div>) as any,
     minWidth: 150,
     renderCell: (param) => (
@@ -166,7 +166,7 @@ export const pictureColumns: GridColDef[] = [
     ),
   },
   {
-    field: "technicalPic",
+    field: "tech_pic",
     headerName: (<div className="font-bold">{"Technical Pic"}</div>) as any,
     minWidth: 150,
     renderCell: (param) => (
@@ -199,7 +199,7 @@ export const specificationColumns: GridColDef[] = [
     ),
   },
   {
-    field: "supplierSpec",
+    field: "specifications",
     headerName: (<div className="font-bold">{"Specifications"}</div>) as any,
     minWidth: 150,
     flex: 1,
@@ -207,7 +207,7 @@ export const specificationColumns: GridColDef[] = [
       <div className="flex gap-4 overflow-auto no-scrollbar">
         {param.value.map((item: any) => (
           <div className="bg-blue-100 p-2 text-center min-w-[2.5rem] rounded">
-            {item.header} : {item.sizeValue}
+            {item.header} : {item.size_value}
           </div>
         ))}
       </div>

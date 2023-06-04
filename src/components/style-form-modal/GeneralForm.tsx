@@ -1,25 +1,38 @@
 import { TextField } from "@mui/material";
 import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { generalColumns } from "../../section/style/table.const";
+import { sendData, urlConst } from "../../utils/httpRequests";
 
-type Props = { mainRef: any };
+type Props = {
+  mainRef: any;
+  styleId: string;
+  onClose: () => void;
+  refetchData: any;
+};
 
-const GeneralForm = ({ mainRef }: Props) => {
-  const { control, getValues, watch } = useForm({
-    defaultValues: mainRef.current.general,
+const GeneralForm = ({ mainRef, styleId, onClose, refetchData }: Props) => {
+  const { handleSubmit, control, getValues, watch } = useForm({
+    defaultValues: mainRef.current.general ? mainRef.current.general : {},
   });
   useEffect(() => {
     mainRef.current.general = watch();
   }, [watch()]);
+  const sumbit = async (e: any) => {
+    e.styleId = styleId;
+    console.log(e);
+
+    await sendData(urlConst.sty_gen_in, e);
+    toast.success("Successfully Added");
+    refetchData();
+    onClose();
+  };
   return (
-    <div>
+    <form onSubmit={handleSubmit(sumbit)}>
       <div className="flex gap-4 items-center mt-4">
         <div>General Section</div>
-        <button
-          type="button"
-          className="inline-block rounded-xl border border-indigo-600 bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
-        >
+        <button className="inline-block rounded-xl border border-indigo-600 bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
           Save
         </button>
       </div>
@@ -42,7 +55,7 @@ const GeneralForm = ({ mainRef }: Props) => {
           />
         ))}
       </div>
-    </div>
+    </form>
   );
 };
 

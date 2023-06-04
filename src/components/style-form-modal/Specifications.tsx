@@ -1,20 +1,32 @@
-import { MenuItem, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { useEffect } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
-import { bomColumns } from "../../section/style/table.const";
+import { toast } from "react-toastify";
+import { sendData, urlConst } from "../../utils/httpRequests";
 
-type Props = { mainRef: any };
+type Props = {
+  mainRef: any;
+  styleId: string;
+  onClose: () => void;
+  refetchData: any;
+};
 
-const Specifications = ({ mainRef }: Props) => {
-  const { control, getValues, watch } = useForm({
-    defaultValues: mainRef.current.specifications || {
-      specifications: [
-        {
-          header: "",
-          sizeValue: "",
+const Specifications = ({ mainRef, styleId, onClose, refetchData }: Props) => {
+  const { control, handleSubmit, getValues, watch } = useForm({
+    defaultValues: mainRef.current.specifications
+      ? {
+          styleId: styleId,
+          specifications: mainRef.current.specifications,
+        }
+      : {
+          styleId: styleId,
+          specifications: [
+            {
+              header: "",
+              size_value: "",
+            },
+          ],
         },
-      ],
-    },
   });
   const { fields, append, remove } = useFieldArray({
     control,
@@ -23,7 +35,7 @@ const Specifications = ({ mainRef }: Props) => {
   const addToFields = () => {
     append({
       header: "",
-      sizeValue: "",
+      size_value: "",
     });
   };
   const removeFromList = (idx: number) => {
@@ -32,8 +44,16 @@ const Specifications = ({ mainRef }: Props) => {
   useEffect(() => {
     mainRef.current.specifications = watch();
   }, [watch()]);
+
+  const submitData = async (e: any) => {
+    console.log(e);
+    await sendData(urlConst.sty_spec_in, e);
+    toast.success("Successfully Added");
+    refetchData();
+    onClose();
+  };
   return (
-    <div className="mt-4">
+    <form onSubmit={handleSubmit(submitData)} className="mt-4">
       <div className="grid grid-cols-2 gap-4">
         <div className="flex-1 h-80">
           <img className="w-full h-full aspect-square " src={""} />
@@ -47,10 +67,7 @@ const Specifications = ({ mainRef }: Props) => {
               </div>
             </div>
             <div>Specification Section</div>
-            <button
-              type="button"
-              className="inline-block rounded-xl border border-indigo-600 bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
-            >
+            <button className="inline-block rounded-xl border border-indigo-600 bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
               Save
             </button>
           </div>
@@ -79,7 +96,7 @@ const Specifications = ({ mainRef }: Props) => {
                 />
                 <Controller
                   control={control}
-                  name={`specifications.${index}.sizeValue`}
+                  name={`specifications.${index}.size_value`}
                   render={({ field }) => (
                     <TextField
                       className={"flex-1"}
@@ -89,7 +106,7 @@ const Specifications = ({ mainRef }: Props) => {
                       variant="outlined"
                       sx={{ label: { textTransform: "capitalize" } }}
                       value={getValues(
-                        `specifications.${index}.sizeValue`
+                        `specifications.${index}.size_value`
                       ).trim()}
                     />
                   )}
@@ -99,7 +116,7 @@ const Specifications = ({ mainRef }: Props) => {
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 

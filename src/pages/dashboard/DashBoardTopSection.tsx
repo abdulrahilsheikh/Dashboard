@@ -10,13 +10,13 @@ const DashBoardTopSection = (props: Props) => {
       <div className="h-full rounded shadow-md px-8 py-4 flex flex-col  justify-between w-72 gap-8">
         <div className={`flex items-center justify-between`}>
           <div>
-            <p className="text-sm text-gray-500">Earnings</p>
+            <p className="text-sm text-gray-500">Styles in Portfolio</p>
 
-            <p className="text-2xl font-medium text-gray-900">$240.94</p>
+            <p className="text-2xl font-medium text-gray-900">42</p>
           </div>
 
           <span className="rounded-full aspect-square w-12 flex items-center justify-center bg-blue-100  text-blue-600">
-            <i className="fa-solid fa-dollar-sign text-xl"></i>
+            <i className="far fa-money-bill-alt text-xl"></i>
           </span>
         </div>
         <div>
@@ -27,29 +27,29 @@ const DashBoardTopSection = (props: Props) => {
       </div>
       <div className="grid grid-cols-4 flex-1 gap-4">
         <DashboardStatsCard
-          count={2568.5}
+          count={128}
           label={"customer"}
           type={"increase"}
           percent={25}
           icon={"fa-solid fa-user-group"}
         />
         <DashboardStatsCard
-          count={2568.5}
+          count={12000}
           label={"Product"}
           type={"decrease"}
           percent={25}
           icon={"fa-solid fa-sitemap"}
         />
         <DashboardStatsCard
-          count={2568.5}
+          count={12000000}
           label={"Sales"}
           type={"increase"}
-          percent={25}
+          percent={15}
           icon={"fa-solid fa-arrow-up-right-dots"}
         />
         <DashboardStatsCard
-          count={2568.5}
-          label={"customer"}
+          count={212457}
+          label={"WIP"}
           type={"increase"}
           percent={25}
           icon={"fa-solid fa-arrows-rotate"}

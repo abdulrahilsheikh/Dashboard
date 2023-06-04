@@ -32,7 +32,11 @@ export const processColumns: GridColDef[] = [
     renderHeader: (params) => (
       <div className="font-bold">{params.colDef.headerName}</div>
     ),
-    renderCell: (param) => <input type={"datetime-local"} />,
+    renderCell: (param) => {
+      console.log(param);
+
+      return <input type={"datetime-local"} />;
+    },
     editable: true,
   },
   {
@@ -51,6 +55,7 @@ export const categoryOptions = [
   { lable: "Process", value: "process" },
   { lable: "Process Group", value: "processGroup" },
   { lable: "Activity", value: "activity" },
+  { lable: "Production", value: "production" },
 ];
 const activityList = [
   "Order Confirmation",
@@ -137,5 +142,10 @@ export const optionsMap: any = {
     { value: "Step 1", label: "Step 1" },
     { value: "Step 2", label: "Step 2" },
     { value: "Step 3", label: "Step 3" },
+  ],
+  production: [
+    { value: "Main Process", label: "Main Process" },
+    { value: "Step 1", label: "Step 1" },
+    { value: "Step 2", label: "Step 2" },
   ],
 };

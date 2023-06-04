@@ -1,62 +1,99 @@
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { toast } from "react-toastify";
 import ActivityFormModal from "../../components/activity-form-modal/ActivityFormModal";
+import DeletePopUp from "../../components/delete-pop-up/DeletePopUp";
 import PartFormModal from "../../components/party-form-modal/PartFormModal";
 import { SearchBar } from "../../components/search-bar/SearchBar";
 import UnitFormModal from "../../components/unit-form-modal/UnitFormModal";
 import { useDebounce } from "../../hooks/useDebounce";
-import { getItemsData } from "../../utils/httpRequests";
+import { generateColumns } from "../../utils/helper";
+import {
+  getData,
+  getItemsData,
+  sendData,
+  urlConst,
+} from "../../utils/httpRequests";
 import { columns, formField } from "./table.const";
-
-const colNames: any = columns.map((item) => item.field);
 
 const Activity = () => {
   const [openAddNew, setOpenAddNew] = useState(false);
-  const [rows, setRows] = useState([]);
+  const [openDeletePopUp, setOpenDeletePopUp] = useState(false);
+  const [rows, setRows] = useState([
+    { id: 10, activity_name: "Avc", description: "something" },
+  ]);
   const [total, setTotal] = useState(0);
   const [search, setSearch] = useState("");
   const [pageInfo, setPageInfo] = useState({ page: 0, pageSize: 25 });
-  const [editRowData, setEditRowData] = useState({});
+  const [editRowData, setEditRowData] = useState<any>({});
   const searchParm = useDebounce(search, 150);
 
   const getdataFromServer = async () => {
-    const data = await getItemsData({
+    const data = await getData(urlConst.activtyOut, {
       page: +pageInfo.page,
       size: +pageInfo.pageSize,
       search: searchParm,
     });
-    const items = data.data.map((item: any, idx: number) => {
-      const temp: any = {};
+    console.log(data);
 
-      item.forEach((obj: any, idx: number) => {
-        temp[colNames[idx]] = obj;
-      });
-      temp["id"] = idx;
-      return temp;
-    });
-    setTotal(data.recordsTotal);
-    setRows(items);
+    setTotal(1000);
+    setRows(data);
   };
 
-  useEffect(() => {}, []);
   useEffect(() => {
     getdataFromServer();
   }, [searchParm, pageInfo]);
-  const handleSubmit = (e: any) => {
-    console.log(e);
+
+  const editfn = (item: any) => {
+    setEditRowData(item.row);
+    setOpenAddNew(true);
   };
+  const deletfn = (item: any) => {
+    setEditRowData(item.row);
+    setOpenDeletePopUp(true);
+  };
+
+  const handleDelet = async () => {
+    console.log(editRowData);
+    setEditRowData({});
+  };
+  const handleSubmit = async (e: any) => {
+    await e.fields.map(async (i: any) => {
+      console.log(i);
+      await sendData(urlConst.activtyIn, i);
+    });
+    setOpenAddNew(false);
+    getdataFromServer();
+    toast.success("Successfully Added");
+  };
+
+  console.log(editRowData);
+
   return (
     <div className="flex h-full">
       {openAddNew && (
         <ActivityFormModal
           onSubmit={handleSubmit}
           open={openAddNew}
-          onClose={() => setOpenAddNew(false)}
+          onClose={() => {
+            setEditRowData({});
+            setOpenAddNew(false);
+          }}
           list={formField}
           values={editRowData}
-          isNew={!rows.length}
-          newItemData={{ sizeName: search }}
+          isNew={!editRowData.activity_name}
+          newItemData={{ activity_name: search }}
+        />
+      )}
+      {openDeletePopUp && (
+        <DeletePopUp
+          open={openDeletePopUp}
+          onClose={() => {
+            setEditRowData({});
+            setOpenDeletePopUp(false);
+          }}
+          onConfirm={handleDelet}
         />
       )}
       {!!document.getElementById("dashboardOutletUtiltiyContainer") && (
@@ -68,6 +105,7 @@ const Activity = () => {
               setSearch={setSearch}
               search={search}
               setOpenAddNew={() => setOpenAddNew(true)}
+              isVisible={true}
             />,
             document.getElementById("dashboardOutletUtiltiyContainer")!
           )}
@@ -81,11 +119,7 @@ const Activity = () => {
           }}
           rows={rows}
           rowCount={total}
-          columns={columns}
-          onRowClick={(item) => {
-            setEditRowData(item.row);
-            setOpenAddNew(true);
-          }}
+          columns={generateColumns(editfn, deletfn, columns)}
           paginationMode={"server"}
           paginationModel={pageInfo}
           onPaginationModelChange={(e) => setPageInfo({ ...e })}

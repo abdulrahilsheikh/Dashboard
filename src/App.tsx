@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import DashBoardOutlet from "./outlets/dashboard-outlet/DashBoardOutlet";
 import MainOutlet from "./outlets/main-outlet/MainOutlet";
+
 import Dashboard from "./pages/dashboard/Dashboard";
 import PurchaseOrder from "./pages/purchase-order/PurchaseOrder";
 import NewWorkOrderMainPage from "./pages/work-order/WorkOrderMainPage";
@@ -9,6 +10,7 @@ import Activity from "./section/activity/Activity";
 import Group from "./section/group/Group";
 import Items from "./section/items/Items";
 import Location from "./section/location/Location";
+import LoginPage from "./section/login-page/LoginPage";
 import Party from "./section/party/Party";
 import Process from "./section/process/Process";
 import Size from "./section/sizes/Size";
@@ -97,6 +99,7 @@ function App() {
       element: <MainOutlet />,
       children: [{ path: "", element: <Dashboard /> }],
     },
+    { path: "login", element: <LoginPage /> },
   ]);
   return <RouterProvider router={router} />;
 }

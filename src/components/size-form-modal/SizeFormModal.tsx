@@ -6,7 +6,7 @@ type Props = {
   open: boolean;
   onClose: () => void;
   list: AddNewItemModalOptions[];
-  values: { sizeName: string; sizes: string[] };
+  values: { size_name: string; sizes: string[] };
   isNew: boolean;
   newItemData: { [key: string]: string };
   onSubmit: (data: any) => void;
@@ -32,8 +32,8 @@ const SizeFormModal = ({
   onSubmit,
 }: Props) => {
   const inital = isNew
-    ? { sizeName: newItemData.sizeName, sizes: [" "] }
-    : { sizeName: values.sizeName, sizes: [...values.sizes] };
+    ? { size_name: newItemData.size_name, sizes: [" "] }
+    : { size_name: values.size_name, sizes: [...values.sizes] };
   const { control, getValues, handleSubmit, setValue } = useForm({
     defaultValues: inital,
   });
@@ -89,7 +89,7 @@ const SizeFormModal = ({
             <div className="font-semibold text-lg">Size Name</div>
             <Controller
               control={control}
-              name={`sizeName`}
+              name={`size_name`}
               render={({ field }) => (
                 <TextField
                   className={"cap"}
@@ -97,7 +97,7 @@ const SizeFormModal = ({
                   label={list[0].placeholder}
                   variant="outlined"
                   sx={{ label: { textTransform: "capitalize" } }}
-                  value={getValues(`sizeName`)}
+                  value={getValues(`size_name`)}
                   required={true}
                 />
               )}

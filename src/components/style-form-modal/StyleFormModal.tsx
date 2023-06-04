@@ -12,6 +12,8 @@ type Props = {
   tabList: Option[];
   styleId: string;
   parentActiveTab: string;
+  editRowData: any;
+  refetchData: any;
 };
 
 export interface Option {
@@ -49,9 +51,12 @@ const StyleFormModal = ({
   tabList,
   styleId,
   parentActiveTab,
+  editRowData,
+  refetchData,
 }: Props) => {
   const [activeTab, setActiveTab] = useState(parentActiveTab || "general");
-  const mainRef = useRef({});
+  const mainRef = useRef(editRowData);
+  const [styleIdForRef, setStyleIdForRef] = useState(styleId ? styleId : "");
   return (
     <Modal
       open={open}
@@ -65,7 +70,12 @@ const StyleFormModal = ({
         <div className="flex items-center gap-4">
           Style Id :
           <TextField
-            value={styleId}
+            value={styleIdForRef}
+            onChange={(e) => {
+              if (!styleId) {
+                setStyleIdForRef(e.target.value);
+              }
+            }}
             required={true}
             variant="outlined"
             sx={{ label: { textTransform: "capitalize" } }}
@@ -77,16 +87,24 @@ const StyleFormModal = ({
           onChange={(_, value) => setActiveTab(value)}
           aria-label="basic tabs"
         >
-          {tabList.map((tb) => (
-            <Tab
-              value={tb.value}
-              label={tb.label}
-              id={`simple-tab-${tb.value}`}
-              // ariaControls={`simple-tabpanel-${tb.value}`}
-            />
-          ))}
+          {tabList
+            .filter((tb) => tb.value == activeTab)
+            .map((tb) => (
+              <Tab
+                value={tb.value}
+                label={tb.label}
+                id={`simple-tab-${tb.value}`}
+                // ariaControls={`simple-tabpanel-${tb.value}`}
+              />
+            ))}
         </Tabs>
-        <Form activeTab={activeTab} styleId={styleId} mainRef={mainRef} />
+        <Form
+          activeTab={activeTab}
+          styleId={styleIdForRef}
+          mainRef={mainRef}
+          onClose={onClose}
+          refetchData={refetchData}
+        />
       </div>
     </Modal>
   );

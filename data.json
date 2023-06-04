@@ -1,12 +1,12 @@
 Activity:{
-    activityName:"",
+    activity_name:"",
     description:""
 }
 
 Group:{
-    groupName:'',
-    groupType:'',
-    groupItems:['items']
+    group_name:'',
+    group_type:'',
+    group_tems:['items']
 }
 
 Item:{
@@ -29,7 +29,7 @@ Item:{
 }
 
 Location:{
-    locationName:'',
+    location_name:'',
     description:""
 }
 
@@ -53,12 +53,12 @@ Party:{
 }
 
 Process:{
-    processName:'',
+    process_name:'',
     activities:["activty"]
 }
 
 Size:{
-    sizeName:'',
+    size_name:'',
     sizes:['size']
 }
 

@@ -1,22 +1,31 @@
 import { TextField } from "@mui/material";
 import { useEffect } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { sendData, urlConst } from "../../utils/httpRequests";
 
-type Props = { mainRef: any };
+type Props = {
+  mainRef: any;
+  styleId: string;
+  onClose: () => void;
+  refetchData: any;
+};
 
-const Operations = ({ mainRef }: Props) => {
-  const { control, getValues, watch } = useForm({
-    defaultValues: mainRef.current.operations || {
-      operations: [
-        {
-          operationName: "",
-          operationShortName: "",
-          machine: "",
-          time: "",
-          rate: 0,
+const Operations = ({ mainRef, styleId, onClose, refetchData }: Props) => {
+  const { control, getValues, watch, handleSubmit } = useForm({
+    defaultValues: mainRef.current.operations
+      ? { operations: mainRef.current.operations }
+      : {
+          operations: [
+            {
+              op_name: "",
+              op_shname: "",
+              machine: "",
+              time: "",
+              rate: 0,
+            },
+          ],
         },
-      ],
-    },
   });
   const { fields, append, remove } = useFieldArray({
     control,
@@ -24,8 +33,8 @@ const Operations = ({ mainRef }: Props) => {
   });
   const addToFields = () => {
     append({
-      operationName: "",
-      operationShortName: "",
+      op_name: "",
+      op_shname: "",
       machine: "",
       time: "",
       rate: 0,
@@ -37,8 +46,16 @@ const Operations = ({ mainRef }: Props) => {
   useEffect(() => {
     mainRef.current.operations = watch();
   }, [watch()]);
+  const submit = async (e: any) => {
+    e.styleId = styleId;
+    console.log(e);
+    await sendData(urlConst.sty_op_in, e);
+    toast.success("Successfully Added");
+    refetchData();
+    onClose();
+  };
   return (
-    <div className="mt-4">
+    <form onSubmit={handleSubmit(submit)} className="mt-4">
       <div className="flex gap-4 items-center">
         <div onClick={addToFields}>
           <div className="transition-all bg-blue-200 flex items-center justify-center h-10 w-10 cursor-pointer rounded-full hover:bg-blue-500">
@@ -46,10 +63,7 @@ const Operations = ({ mainRef }: Props) => {
           </div>
         </div>
         <div>Operations Section</div>
-        <button
-          type="button"
-          className="inline-block rounded-xl border border-indigo-600 bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
-        >
+        <button className="inline-block rounded-xl border border-indigo-600 bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
           Save
         </button>
       </div>
@@ -63,7 +77,7 @@ const Operations = ({ mainRef }: Props) => {
             </div>
             <Controller
               control={control}
-              name={`operations.${index}.operationName`}
+              name={`operations.${index}.op_name`}
               render={({ field }) => (
                 <TextField
                   className={"flex-1"}
@@ -72,13 +86,13 @@ const Operations = ({ mainRef }: Props) => {
                   label={"Operation Name"}
                   variant="outlined"
                   sx={{ label: { textTransform: "capitalize" } }}
-                  value={getValues(`operations.${index}.operationName`)}
+                  value={getValues(`operations.${index}.op_name`)}
                 />
               )}
             />
             <Controller
               control={control}
-              name={`operations.${index}.operationShortName`}
+              name={`operations.${index}.op_shname`}
               render={({ field }) => (
                 <TextField
                   className={"flex-1"}
@@ -87,9 +101,7 @@ const Operations = ({ mainRef }: Props) => {
                   label={"Operation Short Name"}
                   variant="outlined"
                   sx={{ label: { textTransform: "capitalize" } }}
-                  value={getValues(
-                    `operations.${index}.operationShortName`
-                  ).trim()}
+                  value={getValues(`operations.${index}.op_shname`).trim()}
                 />
               )}
             />
@@ -141,7 +153,7 @@ const Operations = ({ mainRef }: Props) => {
           </>
         ))}
       </div>
-    </div>
+    </form>
   );
 };
 

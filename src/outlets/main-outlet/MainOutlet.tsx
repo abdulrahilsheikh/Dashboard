@@ -2,7 +2,9 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import NavigationModal from "../../components/navigation-modal/NavigationModal";
 import SideBar from "../../components/sidebar/SideBar";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import MiniDrawer from "../../components/sidebar/SideBarNonCollapsable";
 type Props = {};
 
 const MainOutlet = ({}: Props) => {
@@ -13,7 +15,10 @@ const MainOutlet = ({}: Props) => {
     setNavigationPaneOpen(false);
   };
   return (
-    <div className={`min-h-screen bg-white w-full overflow-x-hidden static`}>
+    <div
+      className={`relative min-h-screen bg-white w-full overflow-x-hidden static`}
+    >
+      <ToastContainer />
       <header className="z-100 shadow-md ">
         <nav
           className={`flex gap-4 h-12 p-2 border-box border-b-[1px] items-center`}
@@ -24,18 +29,20 @@ const MainOutlet = ({}: Props) => {
           ></i>
         </nav>
       </header>
-      <div className="h-[calc(100vh_-_3rem)] overflow-auto">
+      <div className="pl-16 h-[calc(100vh_-_3rem)] overflow-auto">
         <Outlet />
       </div>
-      <SideBar
-        openNavigationPane={() => setNavigationPaneOpen(true)}
-        open={sideBarOpen}
-        onClose={() => setIsSidebarOpen(false)}
-      />
+
       <NavigationModal
         open={navigationPaneOpen}
         onClose={() => setNavigationPaneOpen(false)}
         closeAll={closeAll}
+      />
+      <MiniDrawer
+        openNavigationPane={() => setNavigationPaneOpen(true)}
+        open={sideBarOpen}
+        close={() => setIsSidebarOpen(false)}
+        openBar={() => setIsSidebarOpen(true)}
       />
     </div>
   );

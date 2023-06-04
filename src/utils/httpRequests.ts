@@ -13,6 +13,37 @@ export const getItemsData = async (params: any) => {
 
   return res;
 };
+
+export const urlConst = {
+  activtyIn: "activity_in",
+  activtyOut: "activity_out",
+  groupOut: "group_out",
+  groupIn: "group_in",
+  itemIn: "item_in",
+  itemout: "item_out",
+  locationout: "location_out",
+  locationin: "location_in",
+  partyin: "party_in",
+  partyout: "party_out",
+  processout: "process_out",
+  processin: "process_in",
+  sizeout: "size_out",
+  sizein: "size_in",
+  sty_gen_in: "sty_gen_in",
+  sty_gen_out: "sty_gen_out",
+  sty_bom_out: "sty_bom_out",
+  sty_bom_in: "sty_bom_in",
+  sty_prod_in: "sty_prod_in",
+  sty_prod_out: "sty_prod_out",
+  sty_op_in: "sty_op_in",
+  sty_op_out: "sty_op_out",
+  sty_pic_out: "sty_pic_out",
+  sty_pic_in: "sty_pic_in",
+  sty_spec_in: "sty_spec_in",
+  sty_spec_out: "sty_spec_out",
+  unit_in: "unit_in",
+  unit_out: "unit_out",
+};
 export const getPartyData = async (params: any) => {
   const data = await fetch(
     "http://103.94.110.212:85/malad/api/master/party_out.php"
@@ -22,7 +53,6 @@ export const getPartyData = async (params: any) => {
 
   return res;
 };
-
 export const sendToParty = async (data: any) => {
   const res = await fetch(
     "http://103.94.110.212:85/malad/api/master/party_in.php",
@@ -30,6 +60,34 @@ export const sendToParty = async (data: any) => {
       method: "POST",
       body: JSON.stringify({ data: data }),
     }
+  );
+  const s = await res.json();
+  console.log(s);
+};
+export const getData = async (url: string, params: any) => {
+  const data = await fetch(
+    `http://103.94.110.212:85/malad/api/master/${url}.php`
+  );
+  const res = await data.json();
+  console.log(res);
+
+  return res;
+};
+export const sendData = async (url: string, data: any) => {
+  const res = await fetch(
+    `http://103.94.110.212:85/malad/api/master/${url}.php`,
+    {
+      method: "POST",
+      body: JSON.stringify({ data: data }),
+    }
+  );
+  const s = await res.json();
+  console.log(s);
+};
+
+export const search = async (url: string, data: any) => {
+  const res = await fetch(
+    `http://103.94.110.212:85/malad/api/master/master_search.php?search=user&module=party`
   );
   const s = await res.json();
   console.log(s);

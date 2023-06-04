@@ -1,12 +1,13 @@
 import { MenuItem, Modal, TextField } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
+import { getData, urlConst } from "../../utils/httpRequests";
 
 type Props = {
   open: boolean;
   onClose: () => void;
   list: AddNewItemModalOptions[];
-  values: { processName: string; activities: string[] };
+  values: { process_name: string; activities: string[] };
   isNew: boolean;
   newItemData: { [key: string]: string };
   onSubmit: (data: any) => void;
@@ -31,11 +32,11 @@ const ProcessFormModal = ({
   isNew,
   newItemData,
   onSubmit,
-  options,
 }: Props) => {
+  const [options, setOptions] = useState<Option[]>([]);
   const inital = isNew
-    ? { processName: newItemData.processName, activities: [" "] }
-    : { processName: values.processName, activities: [...values.activities] };
+    ? { process_name: newItemData.process_name, activities: [" "] }
+    : { process_name: values.process_name, activities: [...values.activities] };
   const { control, getValues, handleSubmit, setValue } = useForm({
     defaultValues: inital,
   });
@@ -51,6 +52,18 @@ const ProcessFormModal = ({
   const removeFromList = (idx: number) => {
     remove(idx);
   };
+  const getOptions = async () => {
+    const data = await getData(urlConst.activtyOut, {});
+    console.log(data);
+    const temp = data.map((i: any) => ({
+      label: i.activity_name,
+      value: i.activity_name,
+    }));
+    setOptions(temp);
+  };
+  useEffect(() => {
+    getOptions();
+  }, []);
   return (
     <Modal
       open={open}
@@ -79,7 +92,7 @@ const ProcessFormModal = ({
             <div className="font-semibold text-lg">Process Name</div>
             <Controller
               control={control}
-              name={`processName`}
+              name={`process_name`}
               render={({ field }) => (
                 <TextField
                   className={"cap"}
@@ -87,7 +100,7 @@ const ProcessFormModal = ({
                   label={list[0].placeholder}
                   variant="outlined"
                   sx={{ label: { textTransform: "capitalize" } }}
-                  value={getValues(`processName`)}
+                  value={getValues(`process_name`)}
                   required={true}
                 />
               )}

@@ -1,19 +1,28 @@
 import { TextField } from "@mui/material";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { generalColumns } from "../../section/style/table.const";
+import { sendData, urlConst } from "../../utils/httpRequests";
 
-type Props = { mainRef: any };
+type Props = {
+  mainRef: any;
+  styleId: string;
+  onClose: () => void;
+  refetchData: any;
+};
 
 const formFieldsList = [
-  { name: "mainPic", label: "Main Pic" },
-  { name: "supplierPic", label: "Supplier Pic" },
-  { name: "technicalPic", label: "Technical Pic" },
+  { name: "main_pic", label: "Main Pic" },
+  { name: "sup_pic", label: "Supplier Pic" },
+  { name: "tech_pic", label: "Technical Pic" },
   { name: "sketch", label: "Sketch" },
 ];
-const Pictures = ({ mainRef }: Props) => {
-  const { watch, setValue } = useForm({
-    defaultValues: mainRef.current.pictures,
+const Pictures = ({ mainRef, styleId, onClose, refetchData }: Props) => {
+  const { watch, setValue, handleSubmit } = useForm({
+    defaultValues: mainRef.current.pictures
+      ? mainRef.current.pictures
+      : { main_pic: "", sup_pic: "", tech_pic: "", sketch: "" },
   });
   useEffect(() => {
     mainRef.current.pictures = watch();
@@ -27,8 +36,17 @@ const Pictures = ({ mainRef }: Props) => {
     };
     reader.readAsDataURL(file);
   };
+
+  const submit = async (e: any) => {
+    e.styleId = styleId;
+    console.log(e);
+    await sendData(urlConst.sty_pic_in, e);
+    toast.success("Successfully Added");
+    refetchData();
+    onClose();
+  };
   return (
-    <div>
+    <form onSubmit={handleSubmit(submit)}>
       <div className="flex gap-4 items-center mt-4">
         <div>Pictures Section</div>
       </div>
@@ -47,17 +65,14 @@ const Pictures = ({ mainRef }: Props) => {
                 }}
               />
             </div>
-            <button
-              type="button"
-              className="inline-block rounded-xl border border-indigo-600 bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
-            >
+            <button className="inline-block rounded-xl border border-indigo-600 bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
               Upload
             </button>
             <img className="w-12 h-12 object-cover" src={watch(item.name)} />
           </div>
         ))}
       </div>
-    </div>
+    </form>
   );
 };
 

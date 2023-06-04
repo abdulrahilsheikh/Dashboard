@@ -11,12 +11,14 @@ type Props = {
   onClose: () => void;
   openNavigationPane: () => void;
 };
-const menuItems: any = {
+export const menuItems: any = {
   dashboard: {
     title: "Dashboard",
-    children: [{ label: "Master", to: "/dashboard/master" }],
+    //children: [{ label: "Master", to: "/dashboard/master" }],
   },
+
   admin: { title: "Admin", children: [{ label: "User Managment", to: "#" }] },
+
   "work-order": {
     title: "Work Order",
     children: [
@@ -24,6 +26,7 @@ const menuItems: any = {
       { label: "Purchase Order", to: "#" },
     ],
   },
+
   "material-managment": {
     title: "Material Management",
     children: [
@@ -33,22 +36,52 @@ const menuItems: any = {
       { label: "Material Transfer", to: "#" },
     ],
   },
-  manufacturing: { title: "Manufacturing" },
+
+  manufacturing: {
+    title: "Production",
+    children: [
+      { label: "Update Process", to: "#" },
+      { label: "Process Status", to: "#" },
+    ],
+  },
   sales: {
     title: "Sales",
-    children: [{ label: "Purchase Order 2", to: "#" }],
+    children: [
+      { label: "New Sales Order", to: "#" },
+
+      { label: "Sales Order Status", to: "#" },
+    ],
   },
   inventory: {
     title: "Inventory",
-    children: [{ label: "Purchase Order 2", to: "#" }],
+    children: [
+      { label: "Raw Material", to: "#" },
+      { label: "Finished Stock", to: "#" },
+      { label: "Item Ledger", to: "#" },
+    ],
   },
   money: {
     title: "Money",
-    children: [{ label: "Purchase Order 2", to: "#" }],
+    children: [
+      { label: "Sales Voucher", to: "#" },
+      { label: "Purchase Voucher", to: "#" },
+      { label: "Expense Voucher", to: "#" },
+      { label: "Payment Journal", to: "#" },
+      { label: "Item Valuation", to: "#" },
+      { label: "Finished Stock Valuation", to: "#" },
+      { label: "Debtors Outstanding", to: "#" },
+      { label: "Creditors Outstanding", to: "#" },
+    ],
   },
   inspection: {
-    title: "Inspection",
-    children: [{ label: "Purchase Order 2", to: "#" }],
+    title: "Approvals",
+    children: [
+      { label: "Raw Material", to: "#" },
+      { label: "Process", to: "#" },
+
+      { label: "Work Order", to: "#" },
+      { label: "Ready Goods", to: "#" },
+    ],
   },
   master: {
     title: "Master",
@@ -66,11 +99,11 @@ const menuItems: any = {
   },
   "product-gallery": {
     title: "Product Gallery",
-    children: [{ label: "Purchase Order 2", to: "#" }],
+    children: [{ label: "Portfolio", to: "#" }],
   },
   reports: {
     title: "Reports",
-    children: [{ label: "Purchase Order 2", to: "#" }],
+    children: [{ label: "Custom Reports", to: "#" }],
   },
 };
 const SideBar = ({ open, onClose, openNavigationPane }: Props) => {

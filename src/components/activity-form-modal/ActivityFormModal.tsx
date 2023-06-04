@@ -32,8 +32,10 @@ const ActivityFormModal = ({
   onSubmit,
 }: Props) => {
   const inital = isNew
-    ? { activityName: newItemData.activityName, description: "" }
-    : { activityName: values.activityName, description: values.description };
+    ? { activity_name: newItemData.activity_name, description: "" }
+    : { activity_name: values.activity_name, description: values.description };
+  console.log(inital, isNew);
+
   const { control, register, getValues, handleSubmit } = useForm({
     defaultValues: { fields: [inital] },
   });
@@ -43,7 +45,7 @@ const ActivityFormModal = ({
   });
   const ref = useRef<any>(null);
   const addToFields = () => {
-    append({ activityName: "", description: "" });
+    append({ activity_name: "", description: "" });
   };
   const removeFromList = (idx: number) => {
     remove(idx);
@@ -92,7 +94,7 @@ const ActivityFormModal = ({
 
                 <Controller
                   control={control}
-                  name={`fields.${index}.activityName`}
+                  name={`fields.${index}.activity_name`}
                   render={({ field }) => (
                     <TextField
                       className={"cap"}
@@ -101,7 +103,7 @@ const ActivityFormModal = ({
                       label={list[0].placeholder}
                       variant="outlined"
                       sx={{ label: { textTransform: "capitalize" } }}
-                      value={getValues(`fields.${index}.activityName`)}
+                      value={getValues(`fields.${index}.activity_name`)}
                     />
                   )}
                 />

@@ -1,12 +1,13 @@
 import { MenuItem, Modal, TextField } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
+import { getData, urlConst } from "../../utils/httpRequests";
 
 type Props = {
   open: boolean;
   onClose: () => void;
   list: AddNewItemModalOptions[];
-  values: { groupName: string; groupItems: string[]; groupType: string };
+  values: { group_name: string; group_tems: string[]; group_type: string };
   isNew: boolean;
   newItemData: { [key: string]: string };
   onSubmit: (data: any) => void;
@@ -22,54 +23,16 @@ export interface Option {
   value: string;
 }
 const dummyOptions: any = {
-  Style: [
-    { label: "Style 1", value: "Style 1" },
-    { label: "Design 5", value: "Design 5" },
-    { label: "Fashion 3", value: "Fashion 3" },
-    { label: "Trend 2", value: "Trend 2" },
-    { label: "Style 7", value: "Style 7" },
-    { label: "Design 4", value: "Design 4" },
-    { label: "Fashion 9", value: "Fashion 9" },
-    { label: "Trend 6", value: "Trend 6" },
-    { label: "Style 10", value: "Style 10" },
-    { label: "Design 8", value: "Design 8" },
-  ],
-  Process: [
-    { label: "Manufacturing 1", value: "Manufacturing 1" },
-    { label: "Fabrication 3", value: "Fabrication 3" },
-    { label: "Production 5", value: "Production 5" },
-    { label: "Assembly 2", value: "Assembly 2" },
-    { label: "Processing 4", value: "Processing 4" },
-    { label: "Manufacturing 8", value: "Manufacturing 8" },
-    { label: "Fabrication 7", value: "Fabrication 7" },
-    { label: "Production 6", value: "Production 6" },
-    { label: "Assembly 9", value: "Assembly 9" },
-    { label: "Processing 10", value: "Processing 10" },
-  ],
-  Activity: [
-    { label: "Cutting", value: "Cutting" },
-    { label: "Molding", value: "Molding" },
-    { label: "Assembly", value: "Assembly" },
-    { label: "Finishing", value: "Finishing" },
-    { label: "Packaging", value: "Packaging" },
-    { label: "Quality Control", value: "Quality Control" },
-    { label: "Stamping", value: "Stamping" },
-    { label: "Welding", value: "Welding" },
-    { label: "Painting", value: "Painting" },
-    { label: "Testing", value: "Testing" },
-  ],
-  Item: [
-    { label: "Material 1", value: "Material 1" },
-    { label: "Fabric 5", value: "Fabric 5" },
-    { label: "Metal 3", value: "Metal 3" },
-    { label: "Plastic 2", value: "Plastic 2" },
-    { label: "Wood 7", value: "Wood 7" },
-    { label: "Leather 4", value: "Leather 4" },
-    { label: "Glass 9", value: "Glass 9" },
-    { label: "Ceramic 6", value: "Ceramic 6" },
-    { label: "Composite 10", value: "Composite 10" },
-    { label: "Paper 8", value: "Paper 8" },
-  ],
+  Style: () => getData(urlConst.sty_gen_out, {}),
+  Process: async () => {
+    const data = await getData(urlConst.processout, {});
+    return data.map((i: any) => ({
+      label: i.process_name,
+      value: i.process_name,
+    }));
+  },
+  Activity: () => getData(urlConst.activtyOut, {}),
+  Item: () => getData(urlConst.itemout, {}),
 };
 const GroupFormModal = ({
   open,
@@ -81,19 +44,21 @@ const GroupFormModal = ({
   onSubmit,
 }: Props) => {
   const inital = isNew
-    ? { groupName: newItemData.groupName, groupItems: [" "], groupType: "" }
+    ? { group_name: newItemData.group_name, group_tems: [" "], group_type: "" }
     : {
-        groupName: values.groupName,
-        groupItems: [...values.groupItems],
-        groupType: values.groupType,
+        group_name: values.group_name,
+        group_tems: [...values.group_tems],
+        group_type: values.group_type,
       };
+  console.log(inital);
+
   const { control, getValues, handleSubmit, setValue, watch } = useForm({
     defaultValues: inital,
   });
   const [options, setOptions] = useState<Option[]>([]);
   const { fields, append, remove } = useFieldArray<any, any, any>({
     control,
-    name: "groupItems",
+    name: "group_tems",
   });
   const ref = useRef<any>(null);
   const addToFields = () => {
@@ -102,14 +67,21 @@ const GroupFormModal = ({
   const removeFromList = (idx: number) => {
     remove(idx);
   };
-  useEffect(() => {
-    const temp = getValues("groupType");
-    console.log(temp);
+  console.log(options);
 
+  const getOptions = async (fieldType: any) => {
+    const data = await dummyOptions[fieldType]();
+    console.log(data);
+
+    setOptions(data);
+  };
+  useEffect(() => {
+    const temp = getValues("group_type");
+    console.log(temp);
     if (temp) {
-      setOptions(dummyOptions[temp]);
+      getOptions(temp);
     }
-  }, [watch("groupType")]);
+  }, [watch("group_type")]);
   return (
     <Modal
       open={open}
@@ -139,7 +111,7 @@ const GroupFormModal = ({
               <div className="font-semibold text-lg">Group Name</div>
               <Controller
                 control={control}
-                name={`groupName`}
+                name={`group_name`}
                 render={({ field }) => (
                   <TextField
                     className={"cap"}
@@ -147,7 +119,7 @@ const GroupFormModal = ({
                     label={list[0].placeholder}
                     variant="outlined"
                     sx={{ label: { textTransform: "capitalize" } }}
-                    value={getValues(`groupName`)}
+                    value={getValues(`group_name`)}
                     required={true}
                   />
                 )}
@@ -157,7 +129,7 @@ const GroupFormModal = ({
               <div className="font-semibold text-lg">Group Type</div>
               <Controller
                 control={control}
-                name={`groupType`}
+                name={`group_type`}
                 render={({ field }) => (
                   <TextField
                     className={"flex-1 min-w-[10rem]"}
@@ -165,7 +137,7 @@ const GroupFormModal = ({
                     label={list[1].placeholder}
                     variant="outlined"
                     sx={{ label: { textTransform: "capitalize" } }}
-                    value={getValues(`groupType`).trim()}
+                    value={getValues(`group_type`).trim()}
                     required={true}
                     select
                   >
@@ -188,7 +160,7 @@ const GroupFormModal = ({
 
           <div className="flex flex-col gap-4">
             <div className="font-semibold text-lg">Group Items</div>
-            <div className="grid grid-cols-5 gap-4 flex-wrap w-full">
+            <div className="grid grid-cols-3 gap-4 flex-wrap w-full">
               {fields.map((_, index) => (
                 <div className="flex items-center gap-2">
                   <div onClick={() => removeFromList(index)}>
@@ -198,15 +170,15 @@ const GroupFormModal = ({
                   </div>
                   <Controller
                     control={control}
-                    name={`groupItems.${index}`}
+                    name={`group_tems.${index}`}
                     render={({ field }) => (
                       <TextField
-                        className={"flex-1 min-w-[10rem]"}
+                        className={"flex-1 min-w-[15rem]"}
                         {...field}
-                        label={list[2].placeholder}
+                        label={`${index + 1} ${list[2].placeholder}`}
                         variant="outlined"
                         sx={{ label: { textTransform: "capitalize" } }}
-                        value={getValues(`groupItems.${index}`).trim()}
+                        value={getValues(`group_tems.${index}`).trim()}
                         required={true}
                         select
                       >

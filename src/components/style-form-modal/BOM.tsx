@@ -1,9 +1,16 @@
 import { MenuItem, TextField } from "@mui/material";
 import { useEffect } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { bomColumns } from "../../section/style/table.const";
+import { sendData, urlConst } from "../../utils/httpRequests";
 
-type Props = { mainRef: any };
+type Props = {
+  mainRef: any;
+  styleId: string;
+  onClose: () => void;
+  refetchData: any;
+};
 const item = [
   { label: "Material 1", value: "Material 1" },
   { label: "Fabric 5", value: "Fabric 5" },
@@ -16,13 +23,15 @@ const item = [
   { label: "Composite 10", value: "Composite 10" },
   { label: "Paper 8", value: "Paper 8" },
 ];
-const BOM = ({ mainRef }: Props) => {
-  const { control, getValues, watch } = useForm({
-    defaultValues: mainRef.current.bom || { itemNames: [" "] },
+const BOM = ({ mainRef, styleId, onClose, refetchData }: Props) => {
+  const { control, getValues, watch, handleSubmit } = useForm({
+    defaultValues: mainRef.current.item_names
+      ? { item_names: mainRef.current.item_names }
+      : { item_names: [" "] },
   });
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "itemNames",
+    name: "item_names",
   });
   const addToFields = () => {
     append(" ");
@@ -31,10 +40,20 @@ const BOM = ({ mainRef }: Props) => {
     remove(idx);
   };
   useEffect(() => {
-    mainRef.current.bom = watch();
+    mainRef.current = { ...mainRef.current, ...watch() };
   }, [watch()]);
+
+  const submitHandler = async (e: any) => {
+    e.styleId = styleId;
+    console.log(e);
+
+    await sendData(urlConst.sty_bom_in, e);
+    refetchData();
+    toast.success("Successfully Added");
+    onClose();
+  };
   return (
-    <div className="mt-4">
+    <form onSubmit={handleSubmit(submitHandler)} className="mt-4">
       <div className="flex gap-4 items-center">
         <div onClick={addToFields}>
           <div className="transition-all bg-blue-200 flex items-center justify-center h-10 w-10 cursor-pointer rounded-full hover:bg-blue-500">
@@ -42,10 +61,7 @@ const BOM = ({ mainRef }: Props) => {
           </div>
         </div>
         <div>BOM Section</div>
-        <button
-          type="button"
-          className="inline-block rounded-xl border border-indigo-600 bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
-        >
+        <button className="inline-block rounded-xl border border-indigo-600 bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
           Save
         </button>
       </div>
@@ -59,7 +75,7 @@ const BOM = ({ mainRef }: Props) => {
             </div>
             <Controller
               control={control}
-              name={`itemNames.${index}`}
+              name={`item_names.${index}`}
               render={({ field }) => (
                 <TextField
                   className={"flex-1"}
@@ -68,7 +84,7 @@ const BOM = ({ mainRef }: Props) => {
                   label={`${index + 1} Item Name`}
                   variant="outlined"
                   sx={{ label: { textTransform: "capitalize" } }}
-                  value={getValues(`itemNames.${index}`).trim()}
+                  value={getValues(`item_names.${index}`).trim()}
                   select
                 >
                   {item?.map((field) => (
@@ -80,7 +96,7 @@ const BOM = ({ mainRef }: Props) => {
           </div>
         ))}
       </div>
-    </div>
+    </form>
   );
 };
 

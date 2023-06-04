@@ -1,6 +1,7 @@
 import { MenuItem, TextField } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
+import Production from "../../components/workorder-create-order/Production";
 import {
   categoryOptions,
   getActivty,
@@ -9,6 +10,7 @@ import {
   optionsMap,
   processColumns,
 } from "./table.const";
+import { getStyles } from "../../components/workorder-create-order/production.table.const";
 
 const NewWorkOrderMainPage = () => {
   const [rows, setRows] = useState<any>([]);
@@ -27,6 +29,9 @@ const NewWorkOrderMainPage = () => {
       }
       if (optionsType == "activity") {
         setRows(getActivty());
+      }
+      if (optionsType == "production") {
+        setRows(getStyles());
       }
     }
   };
@@ -77,16 +82,16 @@ const NewWorkOrderMainPage = () => {
       </div>
       <div className="h-[85%] mt-4">
         <div style={{ height: "100%", width: "100%" }}>
-          <DataGrid
-            onCellEditStop={onCellEditSubmit}
-            rows={rows}
-            rowHeight={60}
-            columns={processColumns}
-
-            // editMode="cell"
-            // getRowHeight={() => "auto"}
-            // getEstimatedRowHeight={() => 200}
-          />
+          {optionsType == "production" ? (
+            <Production rows={rows} />
+          ) : (
+            <DataGrid
+              onCellEditStop={onCellEditSubmit}
+              rows={rows}
+              rowHeight={60}
+              columns={processColumns}
+            />
+          )}
         </div>
       </div>
     </div>

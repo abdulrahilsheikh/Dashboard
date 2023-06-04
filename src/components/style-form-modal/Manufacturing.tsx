@@ -1,9 +1,16 @@
 import { MenuItem, TextField } from "@mui/material";
 import { useEffect } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { bomColumns } from "../../section/style/table.const";
+import { sendData, urlConst } from "../../utils/httpRequests";
 
-type Props = { mainRef: any };
+type Props = {
+  mainRef: any;
+  styleId: string;
+  onClose: () => void;
+  refetchData: any;
+};
 const item = [
   { label: "Manufacturing 1", value: "Manufacturing 1" },
   { label: "Fabrication 3", value: "Fabrication 3" },
@@ -20,9 +27,11 @@ const operations: any = {
   "Manufacturing 1": ["Cutting", "Drilling", "Welding"],
   "Fabrication 3": ["Drilling", "Cutting", "Welding"],
 };
-const Manufacturing = ({ mainRef }: Props) => {
-  const { control, getValues, watch } = useForm({
-    defaultValues: mainRef.current.manufacturing || { process: [" "] },
+const Manufacturing = ({ mainRef, styleId, onClose, refetchData }: Props) => {
+  const { control, getValues, watch, handleSubmit } = useForm({
+    defaultValues: mainRef.current.manufacturing
+      ? mainRef.current.manufacturing
+      : { process: [" "] },
   });
   const { fields, append, remove } = useFieldArray({
     control,
@@ -37,8 +46,16 @@ const Manufacturing = ({ mainRef }: Props) => {
   useEffect(() => {
     mainRef.current.manufacturing = watch();
   }, [watch()]);
+  const submit = async (e: any) => {
+    e.styleId = styleId;
+    console.log(e);
+    await sendData(urlConst.sty_prod_in, e);
+    toast.success("Successfully Added");
+    refetchData();
+    onClose();
+  };
   return (
-    <div className="mt-4">
+    <form onSubmit={handleSubmit(submit)} className="mt-4">
       <div className="flex gap-4 items-center">
         <div onClick={addToFields}>
           <div className="transition-all bg-blue-200 flex items-center justify-center h-10 w-10 cursor-pointer rounded-full hover:bg-blue-500">
@@ -46,10 +63,7 @@ const Manufacturing = ({ mainRef }: Props) => {
           </div>
         </div>
         <div>Manufacturing Section</div>
-        <button
-          type="button"
-          className="inline-block rounded-xl border border-indigo-600 bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
-        >
+        <button className="inline-block rounded-xl border border-indigo-600 bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
           Save
         </button>
       </div>
@@ -95,7 +109,7 @@ const Manufacturing = ({ mainRef }: Props) => {
           </div>
         ))}
       </div>
-    </div>
+    </form>
   );
 };
 

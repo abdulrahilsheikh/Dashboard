@@ -31,6 +31,14 @@ const DashBoardOutlet = (props: Props) => {
         {/* breadcrum */}
         <div className="p-3">
           <Breadcrumbs aria-label="breadcrumb">
+            <Link
+              underline="hover"
+              color="inherit"
+              href={"/dashboard"}
+              className={"capitalize"}
+            >
+              Home
+            </Link>
             {list.map((item, idx) => (
               <Link
                 underline="hover"
